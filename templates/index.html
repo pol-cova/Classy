@@ -1,4 +1,48 @@
-{% include 'base.html' %}
-{% block content %}
-    <h1>Home</h1>
-{% endblock %}
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Password Generator!{% endblock %}</title>
+</head>
+<style>
+    .custom-h1 {
+    color: #F2F4F5;
+}
+</style>
+<body class="content">
+    {% block content %}
+    <div class="text-secondary px-4 py-5 text-center" style="background-color: #1A1B25;">
+        <div class="row align-items-center g-lg-5 py-5">
+            <div class="col-lg-7 text-center text-lg-start">
+                <h1 class="display-4 fw-bold lh-1" style="font-size: 8rem; color: #F7B32B;">Classy</h1>
+            <p class="col-lg-10 fs-4" style="color: #F2F4F3;">Simplifica, organiza y facilita tu vida como estudiante, y si es gratis!</p>
+            </div>
+            <div class="col-md-10 mx-auto col-lg-5">
+                <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" action="#" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <input type="text" class="form-control" placeholder="Username: " aria-label="Username" name="username" style="font-size: 1.25rem;">
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" class="form-control" placeholder="Password: " aria-label="Password" name="password" style="font-size: 1.25rem;">
+                    </div>
+                    <button class="w-100 btn btn-lg" style="background-color: #1A1B25; color: #F2F4F3;" type="submit">Login</button>
+                    <br>
+                    <br>
+                    <a class="link">¿Olvidaste tu contraseña?</a>
+                    <hr class="my-4">
+                    <small class="text-body-secondary">Si no tienes una cuenta, crea una ahora es gratis!.</small>
+                    <br/>
+                    <br/>
+                    <a class="w-100 btn btn-lg" style="background-color: #D7263D; color: #F2F4F3;">Sign up</a>
+                    <br>
+                    <br>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>
