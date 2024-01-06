@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Password Generator!{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
 </head>
 <style>
     .custom-h1 {
@@ -17,7 +17,7 @@
         <div class="row align-items-center g-lg-5 py-5">
             <div class="col-lg-7 text-center text-lg-start">
                 <h1 class="display-4 fw-bold lh-1" style="font-size: 8rem; color: #F7B32B;">Classy</h1>
-            <p class="col-lg-10 fs-4" style="color: #F2F4F3;">Simplifica, organiza y facilita tu vida como estudiante, y si es gratis!</p>
+            <p class="col-lg-10 fs-4" style="color: #F2F4F3;">Optimiza tu vida estudiantil con nuestra plataforma: simplificación, organización y facilidad, ¡todo en un solo lugar!</p>
             </div>
             <div class="col-md-10 mx-auto col-lg-5">
                 <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" action="#" method="post">
@@ -36,7 +36,26 @@
                     <small class="text-body-secondary">Si no tienes una cuenta, crea una ahora es gratis!.</small>
                     <br/>
                     <br/>
-                    <a class="w-100 btn btn-lg" style="background-color: #D7263D; color: #F2F4F3;">Sign up</a>
+                    <button type="button" class="w-100 btn btn-lg" style="background-color: #D7263D; color: #F2F4F3;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Sign up
+                    </button>
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                            <div class="modal-body">
+                                ...
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
                     <br>
                     <br>
                 </form>
