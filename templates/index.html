@@ -28,7 +28,7 @@
                     <div class="mb-3">
                         <input type="password" class="form-control" placeholder="Password: " aria-label="Password" name="password" style="font-size: 1.25rem;">
                     </div>
-                    <button class="w-100 btn btn-lg" style="background-color: #1A1B25; color: #F2F4F3;" type="submit">Login</button>
+                    <button class="w-100 btn btn-lg" style="background-color: #1A1B25; color: #F2F4F3;" type="submit">Iniciar sesión</button>
                     <br>
                     <br>
                     <a class="link">¿Olvidaste tu contraseña?</a>
@@ -37,21 +37,58 @@
                     <br/>
                     <br/>
                     <button type="button" class="w-100 btn btn-lg" style="background-color: #D7263D; color: #F2F4F3;" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Sign up
+                        Crear cuenta
                     </button>
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Crear cuenta</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                            <div class="modal-body">
-                                ...
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                            <div class="modal-body row g-3">
+                                <form>
+                                    <div class="col-md-6">
+                                        <label for="fname" class="form-label">Nombre</label>
+                                        <input type="text" class="form-control" id="fname" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="lname" class="form-label"> Apellido</label>
+                                        <input type="text" class="form-control" id="lname" required>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for username class="form-label">Nombre de usuario</label>
+                                        <div class="input-group has-validation">
+                                            <span class="input-group-text">@</span>
+                                            <input type="text" class="form-control" id="username" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="password" class="form-label">Contraseña</label>
+                                        <input type="password" class="form-control" id="password" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="val-password" class="form-label">Confirmar Contraseña</label>
+                                        <input type="password" class="form-control" id="val-password" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                                            <label class="form-check-label" for="invalidCheck">
+                                            Acepto los terminos y condiciones
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <small class="text-body-secondary">Al crear una cuenta protegemos toda tu información, disfruta nuestra plataforma! </small>
+                                    <small class="text-body-secondary">Al ingresar en tu cuenta podras personalizarla para mejorar tu experiencia como usuario!</small>
+                                    <div class="col-12">
+                                        <button class="w-100 btn btn-lg" style="background-color: #D7263D; color: #F2F4F3;"  type="submit">Registrarme</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                         </div>
