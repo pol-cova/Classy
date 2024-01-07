@@ -19,18 +19,17 @@
                 <h1 class="display-4 fw-bold lh-1" style="font-size: 8rem; color: #F7B32B;">Classy</h1>
             <p class="col-lg-10 fs-4" style="color: #F2F4F3;">Optimiza tu vida estudiantil con nuestra plataforma: simplificación, organización y facilidad, ¡todo en un solo lugar!</p>
             </div>
-            <div class="col-md-10 mx-auto col-lg-5">
-                <form class="p-4 p-md-5 border rounded-3 bg-body-tertiary" action="#" method="post">
+            <div class="col-md-10 mx-auto col-lg-5 border rounded-3 bg-body-tertiary">
+                <form class="p-4 p-md-5" action="{% url 'login' %}" method="post">
                     {% csrf_token %}
                     <div class="mb-3">
-                        <input type="text" class="form-control" placeholder="Username: " aria-label="Username" name="username" style="font-size: 1.25rem;">
+                        <input type="text" class="form-control" placeholder="Usuario: " aria-label="Username" name="username" style="font-size: 1.25rem;">
                     </div>
                     <div class="mb-3">
-                        <input type="password" class="form-control" placeholder="Password: " aria-label="Password" name="password" style="font-size: 1.25rem;">
+                        <input type="password" class="form-control" placeholder="Contraseña: " aria-label="Password" name="password" style="font-size: 1.25rem;">
                     </div>
                     <button class="w-100 btn btn-lg" style="background-color: #1A1B25; color: #F2F4F3;" type="submit">Iniciar sesión</button>
-                    <br>
-                    <br>
+                </form>
                     <a class="link">¿Olvidaste tu contraseña?</a>
                     <hr class="my-4">
                     <small class="text-body-secondary">Si no tienes una cuenta, crea una ahora es gratis!.</small>
@@ -46,8 +45,8 @@
                                     <h1 class="modal-title fs-5" id="exampleModalLabel">Crear cuenta</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                            <div class="modal-body row g-3">
-                                <form>
+                            <div class="modal-body">
+                                <form class="row g-3">
                                     <div class="col-md-6">
                                         <label for="fname" class="form-label">Nombre</label>
                                         <input type="text" class="form-control" id="fname" required>
@@ -95,10 +94,10 @@
                     </div>
                     <br>
                     <br>
-                </form>
             </div>
         </div>
     </div>
+    {% include 'partials/_footer.html' %}
     {% endblock %}
 </body>
 </html>
