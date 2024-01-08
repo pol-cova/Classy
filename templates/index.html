@@ -46,33 +46,34 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                             <div class="modal-body">
-                                <form class="row g-3">
+                                <form class="row g-3" action="{% url 'signup' %}" method="post">
+                                    {% csrf_token %}
                                     <div class="col-md-6">
                                         <label for="fname" class="form-label">Nombre</label>
-                                        <input type="text" class="form-control" id="fname" required>
+                                        <input type="text" class="form-control" id="fname" name="first_name" required>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="lname" class="form-label"> Apellido</label>
-                                        <input type="text" class="form-control" id="lname" required>
+                                        <input type="text" class="form-control" id="lname" name="last_name" required>
                                     </div>
                                     <div class="col-md-12">
                                         <label for username class="form-label">Nombre de usuario</label>
                                         <div class="input-group has-validation">
                                             <span class="input-group-text">@</span>
-                                            <input type="text" class="form-control" id="username" required>
+                                            <input type="text" class="form-control" id="username" name="username" required>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <label for="email" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="email" required>
+                                        <input type="email" class="form-control" id="email" name="email" required>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="password" class="form-label">Contraseña</label>
-                                        <input type="password" class="form-control" id="password" required>
+                                        <input type="password" class="form-control" id="password" name="password1" required>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="val-password" class="form-label">Confirmar Contraseña</label>
-                                        <input type="password" class="form-control" id="val-password" required>
+                                        <input type="password" class="form-control" id="val-password" name="password2" required>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-check">
@@ -96,6 +97,11 @@
                     <br>
             </div>
         </div>
+    {% if message %}
+    <div class="alert alert-warning" role="alert">
+        {{ message }}
+    </div>
+    {% endif %}
     </div>
     {% include 'partials/_footer.html' %}
     {% endblock %}
