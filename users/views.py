@@ -16,7 +16,8 @@ def index(request):
 # dashboard
 def home(request):
     if request.user.is_authenticated:
-        return render(request, 'home.html')
+        user = request.user
+        return render(request, 'home.html', {'user': user})
     else:
         return render(request, 'index.html', {'message': 'Inicia sesión para continuar...'})
 
@@ -51,3 +52,10 @@ def user_signup(request):
 def user_logout(request):
     logout(request)
     return redirect('index')
+
+def user_profile(request):
+    if request.user.is_authenticated:
+        user = request.user
+        return render(request, 'profile.html', {'user': user})
+    else:
+        return render(request, 'index.html', {'message': 'Inicia sesión para continuar...'})
