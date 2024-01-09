@@ -1,10 +1,43 @@
 {% extends '_home_base.html' %}
 {% block content %}
+<style>
+.profile-container {
+            max-width: 600px;
+            margin: auto;
+            margin-top: 50px;
+            padding: 30px;
+            border: 1px solid #ced4da;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 5px solid #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+</style>
+
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Home</h1>
-            <p>Home page content goes here.</p>
+    <div class="card profile-container">
+        <div class="row no-gutters">
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">@{{ user }}</h5>
+                    <p class="card-text">{{ user.first_name }} {{ user.last_name }}</p>
+                    <p class="card-text">Hobbies: Play video games, read, and code</p>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-muted">
+            <small>Last Updated: January 9, 2024</small>
         </div>
     </div>
+</div>
+
 {% endblock %}
