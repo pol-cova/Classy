@@ -1,4 +1,107 @@
 {% extends '_home_base.html' %}
 {% block content %}
-<h1>ToDo</h1>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h4">Mis tareas: </h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group me-2">
+        <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#createTask" ><span class="material-symbols-outlined">
+            add
+            </span>
+        </span>Crear Tareas</button>
+        <div class="modal fade" id="createTask" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Crear tareas</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <form action="{% url 'add_task'} %">
+                {% csrf_token %}
+                {{form_task}}
+                </form>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success">Agregar tarea</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#createGroup" ><span class="material-symbols-outlined">
+            ad_group
+            </span>Crear Grupos</button>
+        </div>
+        <div class="modal fade" id="createGroup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Crear grupos</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><small class="text-muted">Los grupos permiten filtrar las tareas</small></p>
+                    {{form_group}}
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-dark">Crear grupo</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-sm btn-outline-warning dropdown-toggle d-flex align-items-center gap-1"><span class="material-symbols-outlined">
+            filter_alt
+            </span>Filtrar
+        </button>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <form action="{% url 'add_task' %}" method="post">
+            {% csrf_token %}
+            <div class="col">
+                <div class="form-group mb-2">
+                    <input type="text" class="form-control" placeholder="Agregar tarea">
+                </div>
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-success mb-2"><span class="material-symbols-outlined">
+                    add
+                    </span></button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="container" id="todo">
+    <div class="card w-100"> 
+        <div class="card-body">
+            <h5 class="card-title">Tareas pendientes</h5>
+            <ul class="list-group list-group-flush">
+                {% for task in tasks %}
+                {% if task.status == False %}
+                <li class="list-group-item">
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="material-symbols-outlined">
+                                check_box_outline_blank
+                            </span>
+                            <span>{{task.name}}</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="material-symbols-outlined">
+                                edit
+                            </span>
+                            <span class="material-symbols-outlined">
+                                delete
+                            </span>
+                        </div>
+                    </div>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
 {% endblock %}

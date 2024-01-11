@@ -33,10 +33,10 @@
         </div>
         {% if not user.profile.profile_complete %}
         <div class="card-footer text-muted">
-            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#completePerfil">
                 Completar perfil
             </button>
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="completePerfil" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -94,10 +94,10 @@
         {% endif %}
         {% if user.profile.profile_complete %}
         <div class="card-footer text-muted">
-            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editProfile">
                 Editar perfil
             </button>
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="editProfile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
