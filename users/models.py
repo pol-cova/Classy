@@ -17,6 +17,13 @@ class Profile(models.Model):
     pronouns = models.CharField(max_length=5, choices=PRONOUNS, blank=True)
     career = models.CharField(max_length=100, blank=True)
     #profile_picture = models.ImageField(upload_to='profile_pictures', blank=True)
+    # check if profile is complete in a bool
+    profile_complete = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
+    
+    def get_pronoun(self):
+        for key, value in self.PRONOUNS:
+            if key == self.pronouns:
+                return value

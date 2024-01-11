@@ -28,15 +28,111 @@
         <div class="row no-gutters">
             <div class="col-md-8">
                 <div class="card-body">
-                    <h5 class="card-title">@{{ user }}</h5>
-                    <p class="card-text">{{ user.first_name }} {{ user.last_name }}</p>
-                    <p class="card-text">Hobbies: Play video games, read, and code</p>
+                    <h5 class="card-title">@{{ user }} <small class="text-muted" id="pronouns">{{user.profile.get_pronoun}}</small></h5>
+                    {% if user.profile.profile_complete %}
+                    <p class="card-text">{{ user.profile.bio }}</p>
+                    <p class=" small card-text">Cumpleaños: {{ user.profile.birth_date }} 🥳</p>
+                    <p class=" card-text" style="font-weight: bold;">Carrera: {{ user.profile.career }}</p>
+                    {% else %}
+                    <div class="alert alert-warning" role="alert">
+                        Aún no completas tu perfil, puedes hacerlo ahora o en otro momento!
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
+        {% if not user.profile.profile_complete %}
         <div class="card-footer text-muted">
-            <small>Last Updated: January 9, 2024</small>
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Completar perfil
+            </button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Perfil</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    <div class="modal-body">
+                    <form class="row g-3" action="{% url 'complete_profile' %}" method="post">
+                        {% csrf_token %}
+                                    <div class="col-md-6">
+                                        <label for="fname" class="form-label">Nombre</label>
+                                        <input type="text" class="form-control" id="fname" name="first_name" value="{{user.first_name}}" disabled>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="lname" class="form-label"> Apellido</label>
+                                        <input type="text" class="form-control" id="lname" name="last_name"  value="{{user.last_name}}" disabled>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email"  value="{{user.email}}" disabled>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="bio" class="form-label">Biografia</label>
+                                        <textarea class="form-control" id="bio" name="bio" rows="3" placeholder="{{user.profile.bio}}" value="{{user.profile.bio}}"></textarea>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="birth_date" class="form-label">Cumpleaños 🥳</label>
+                                        <input type="date" class="form-control" id="birth_date" name="birth_date">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="pronouns" class="form-label">Pronombres</label>
+                                        <select class="form-control" id="pronounSelect" name="pronouns">
+                                            {% for pronoun, display_name in PRONOUNS %}
+                                            <option value="{{ pronoun }}">{{ display_name }}</option>
+                                            {% endfor %}
+                                        </select>
+
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="career" class="form-label">Carrera</label>
+                                        <input type="text" class="form-control" id="career" name="career" placeholder="{{user.profile.career}}">
+                                    </div>
+                                    <input type="hidden" name="profile_complete" value="1">
+                                    <small class="text-body-secondary">Recuerda que despues de completar tu perfil solo prodras cambiar la biografia!</small>                                    
+                                    <div class="col-12">
+                                        <button class="w-100 btn btn-lg" style="background-color: #D7263D; color: #F2F4F3;"  type="submit">Guardar perfil</button>
+                                    </div>
+                    </form>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <a href="{% url 'delete_account' %}" class="btn btn-danger">Eliminar cuenta</a>
         </div>
+        {% endif %}
+        {% if user.profile.profile_complete %}
+        <div class="card-footer text-muted">
+            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Editar perfil
+            </button>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Perfil</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    <div class="modal-body">
+                    <form class="row g-3" action="{% url 'edit_profile' %}" method="post">
+                        {% csrf_token %}
+                                    <div class="col-md-12">
+                                        <label for="bio" class="form-label">Biografia</label>
+                                        <textarea class="form-control" id="bio" name="bio" rows="3" placeholder="{{user.profile.bio}}" value="{{user.profile.bio}}"></textarea>
+                                    </div>
+                                    <input type="hidden" name="profile_complete" value="True">
+                                    <div class="col-12">
+                                        <button class="w-100 btn btn-lg" style="background-color: #D7263D; color: #F2F4F3;"  type="submit">Guardar perfil</button>
+                                    </div>
+                    </form>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <a href="{% url 'delete_account' %}" class="btn btn-danger">Eliminar cuenta</a>
+        </div>
+        {% endif %}
     </div>
 </div>
 

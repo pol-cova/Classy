@@ -3,8 +3,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+
 # import forms
-from .forms import SignUpForm, LoginForm
+from .forms import SignUpForm, LoginForm, EditProfileForm, EditBioForm
+from .models import Profile
 # index 
 def index(request):
     if request.user.is_authenticated:
@@ -21,6 +23,7 @@ def home(request):
     else:
         return render(request, 'index.html', {'message': 'Inicia sesión para continuar...'})
 
+# user login
 def user_login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -33,12 +36,15 @@ def user_login(request):
             if user:
                 # login user
                 login(request, user)
+                # create user profile 
+                profile, created = Profile.objects.get_or_create(user=user)
                 return redirect('home')
             else:
                 return render(request, 'index.html', {'message': 'Usuario o contraseña incorrectos'})
         else:
             return redirect('index')
 
+# user signup
 def user_signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -49,13 +55,66 @@ def user_signup(request):
         else:
             return redirect('index')
 
+# user logout
 def user_logout(request):
     logout(request)
     return redirect('index')
 
+# user profile
 def user_profile(request):
     if request.user.is_authenticated:
         user = request.user
-        return render(request, 'profile.html', {'user': user})
+        profile = request.user.profile
+        PRONOUNS = (
+        ('SHE', 'She/Her'),
+        ('HE', 'He/Him'),
+        ('THEY', 'They/Them'),
+        ('OTHER', 'Other'),
+        )
+        context = {
+            'user': user,
+            'PRONOUNS': PRONOUNS,
+            'profile': profile,
+        }
+        return render(request, 'profile.html', context)
+    else:
+        return render(request, 'index.html', {'message': 'Inicia sesión para continuar...'})
+
+# complete profile
+def complete_profile(request):
+    if request.user.is_authenticated:
+        userProfile, created = Profile.objects.get_or_create(user=request.user)
+        form = EditProfileForm(instance=userProfile)
+        if request.method == 'POST':
+            form = EditProfileForm(request.POST, instance=userProfile)
+            if form.is_valid():
+                form.save()
+                return redirect('profile')
+            else:
+                return redirect('profile')
+    else:
+        return render(request, 'index.html', {'message': 'Inicia sesión para continuar...'})
+
+# edit bio
+def edit_profile(request):
+    if request.user.is_authenticated:
+        userProfile, created = Profile.objects.get_or_create(user=request.user)
+        form = EditBioForm(instance=userProfile)
+        if request.method == 'POST':
+            form = EditBioForm(request.POST, instance=userProfile)
+            if form.is_valid():
+                form.save()
+                return redirect('profile')
+            else:
+                return redirect('profile')
+    else:
+        return render(request, 'index.html', {'message': 'Inicia sesión para continuar...'})
+
+# delete account 
+def delete_account(request):
+    if request.user.is_authenticated:
+        user = request.user
+        user.delete()
+        return redirect('index')
     else:
         return render(request, 'index.html', {'message': 'Inicia sesión para continuar...'})
