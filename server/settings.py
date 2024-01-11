@@ -40,7 +40,11 @@ INSTALLED_APPS = [
     "rest_framework",
     "djoser",
     # APPS
-    "users"
+    "users",
+    "todo",
+    "remainders",
+    "studyTimer",
+    "generators",
 ]
 
 MIDDLEWARE = [
