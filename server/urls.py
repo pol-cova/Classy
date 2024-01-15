@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('users.urls')),# new
     path('todo/', include('todo.urls')),# new
+    path('timer/', include('studyTimer.urls')),# new
 ]
