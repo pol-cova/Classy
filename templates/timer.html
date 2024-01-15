@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
         body {
@@ -8,13 +11,20 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            background-color: #f8f9fa;
+            background-color: #1a1b25;
         }
-        
         #timer {
-            font-size: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        #display {
+            font-size: 10rem;
+            font-weight: bold;
+            font-family: 'Inconsolata', monospace;
+            color: #f7b32b;
             text-align: center;
-            color: #343a40;
         }
 
         #controls {
@@ -26,13 +36,16 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="text-center">Pomodoro Timer</h1>
         <div id="timer">
-            <button class="btn" onclick="add()">Add</button>
+            <button class="btn" onclick="add()" style="color: #f2f4f3; font-size: 48px;"><span class="material-symbols-outlined">
+                add
+                </span></button>
             <span id="display">25:00</span>
-            <button class="btn" onclick="subtract()">Subtract</button>
-
+            <button class="btn" onclick="subtract()"  style="color: #f2f4f3; font-size: 48px;"><span class="material-symbols-outlined">
+                remove
+                </span></button>
         </div>
+        <h1 class="text-center" id="header">Estudio</h1>
         <div id="controls">
             <button class="btn btn-primary" onclick="startTimer()">Start</button>
             <button class="btn btn-secondary" onclick="stopTimer()">Stop</button>
@@ -41,8 +54,9 @@
     </div>
     <script>
         let display = document.getElementById('display');
+        let header = document.getElementById('header');
+        let interval;
 
-        // add minutes to timer and update display
         function add() {
             let currentTime = display.innerHTML.split(':');
             let minutes = parseInt(currentTime[0]);
@@ -50,7 +64,6 @@
             display.innerHTML = formatTime(minutes) + ':' + currentTime[1];
         }
 
-        // subtract minutes from timer and update display
         function subtract() {
             let currentTime = display.innerHTML.split(':');
             let minutes = parseInt(currentTime[0]);
@@ -60,10 +73,45 @@
             }
         }
 
-        // helper function to format time with leading zero
         function formatTime(time) {
         return (time < 10) ? '0' + time : time;
         }
+
+        // start timer
+        function startTimer() {
+            let currentTime = display.innerHTML;
+            let timer = currentTime.split(':');
+            let minutes = parseInt(timer[0]);
+            let seconds = parseInt(timer[1]);
+            let time = minutes * 60 + seconds;
+            let originalTime = time;
+
+            interval = setInterval(function() {
+                time--;
+                minutes = Math.floor(time / 60);
+                seconds = time % 60;
+                display.innerHTML = formatTime(minutes) + ':' + formatTime(seconds);
+
+            if (time <= 0) {
+                clearInterval(interval);
+                header.innerHTML = 'Break';
+                display.innerHTML = '05:00';
+                setTimeout(function() {
+                    display.innerHTML = formatTime(originalTime / 60) + ':00';
+                }, 5000);
+            }
+            }, 1000);
+        }   
+
+            // stop timer
+            function stopTimer() {
+                clearInterval(interval);
+            }
+
+            // reset timer
+            function resetTimer() {
+                display.innerHTML = '25:00';
+            }
     </script>
 </body>
 {% endblock %}
