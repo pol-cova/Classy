@@ -7,6 +7,11 @@ from django.contrib.auth.decorators import login_required
 # import forms
 from .forms import SignUpForm, LoginForm, EditProfileForm, EditBioForm
 from .models import Profile
+
+# import from todo
+from todo.models import Task
+from todo.forms import AddTaskForm
+
 # index 
 def index(request):
     if request.user.is_authenticated:
@@ -19,7 +24,17 @@ def index(request):
 def home(request):
     if request.user.is_authenticated:
         user = request.user
-        return render(request, 'home.html', {'user': user})
+        tasks = Task.objects.filter(user=user)
+        # count not completed for user
+        tasks_count = Task.objects.filter(user=user, completed=False).count()
+        form_task = AddTaskForm()
+        context = {
+            'user': user,
+            'tasks': tasks,
+            'tasks_count': tasks_count,
+            'form_task': form_task
+        }
+        return render(request, 'home.html', context)
     else:
         return render(request, 'index.html', {'message': 'Inicia sesión para continuar...'})
 

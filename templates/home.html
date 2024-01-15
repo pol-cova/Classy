@@ -2,24 +2,71 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-md-6"> <!-- Make the first card larger by using col-md-6 -->
-            <div class="card w-100"> <!-- Set width to 100% to make it take the full width of the column -->
+        <div class="col-md-6"> 
+            <div class="card w-100"> 
                 <div class="card-body">
-                    <h5 class="card-title">Big ToDo</h5>
+                    <h5 class="card-title">Tareas pendientes 
+                        <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#createTask" ><span class="material-symbols-outlined">
+                            add
+                            </span>
+                        </span></button>
+                        <div class="modal fade" id="createTask" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Crear tareas</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                <form action="{% url 'add_task' %} " method="post">
+                                {% csrf_token %}
+                                {{form_task}}
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success">Agregar tarea</button>
+                                </div>
+                            </form>
+                            </div>
+                            </div>
+                        </div>
+                    </h5>
+            <ul class="list-group list-group-flush">
+                {% for task in tasks %}
+                {% if task.completed == False %}
+                <li class="list-group-item">
+                    <div class="d-flex justify-content-between">
+                        <div class="d-flex align-items-center gap-2">
+                            <form action="{% url 'complete_task' task.id %}" method="post">
+                                {% csrf_token %}
+                            <button type="submit" class="btn">                            
+                                <span class="material-symbols-outlined">
+                                check_box_outline_blank
+                            </span></button>
+                            </form>
+                            <span>{{task.title}}</span>
+                        </div>
+                    </div>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card w-100"> <!-- Set width to 100% to make it take the full width of the column -->
+            <div class="card w-100" style="background-color: #6C6EA0;"> 
                 <div class="card-body">
-                    <h5 class="card-title">ToDo</h5>
+                    <h5 class="card-title" style="font-size: 3em; color: #F2F4F5;"> {{tasks_count}}</h5>
+                    <p class="card-text" style="font-size: 1.25em; color: #F2F4F5;">Tareas pendientes</p>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card w-100"> <!-- Set width to 100% to make it take the full width of the column -->
+            <div class="card w-100" style="background-color: #F7B32B;">
                 <div class="card-body">
-                    <h5 class="card-title">ToDo</h5>
+                    <h5 class="card-title" style="font-size: 3em; color: #F2F4F5;"> 0</h5>
+                    <p class="card-text" style="font-size: 1.25em; color: #F2F4F5;">Recordatorios</p>
                 </div>
             </div>
         </div>
