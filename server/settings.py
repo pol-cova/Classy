@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     "timetable",
     "studyTimer",
     "remainders",
-    "generators",
+    "social",
+    "notes",
 ]
 
 MIDDLEWARE = [
