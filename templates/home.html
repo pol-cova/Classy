@@ -18,7 +18,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                <form action="{% url 'add_task' %} " method="post">
+                                <form action="{% url 'new_task' %} " method="post">
                                 {% csrf_token %}
                                 {{form_task}}
                                 </div>
@@ -71,9 +71,50 @@
             </div>
         </div>
     </div>
-    
+    <br>
     <div class="row">
-
+        <div class="col-md-9">
+            <div class="card w-100">
+                <h5 class="card-header">Clases de hoy <span class="badge bg-warning">{{ today }}</span></h5>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Materia</th>
+                                <th>Salon</th>
+                                <th>Horario</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for subject in subjects|dictsort:"hour_start" %}
+                                {% if subject.get_day == today %}
+                                <tr>
+                                    <td>{{ subject.name }}</td>
+                                    <td>{{ subject.clasroom }}</td>
+                                    <td>{{ subject.hour_start|time:"H:i" }} - {{ subject.hour_end|time:"H:i" }}</td>
+                                </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <style>
+            #btn{
+                background-color: #D7263D;
+                color: #F2F4F5;
+                font-size: 1.5em;
+                padding: 1em;
+                border-radius: 0.5em;
+                text-decoration: none;
+            }
+        </style>
+        <div class="col-md-3">
+            <div class="card w-100">
+                <a id="btn" href="{% url 'studyTimer' %}">Tiempo de estudiar</a>
+            </div>
+        </div>
     </div>
 </div>
 

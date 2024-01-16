@@ -39,8 +39,21 @@ def add_task(request):
             task = form.save(commit=False)
             task.user = request.user
             task.save()
+            return redirect('todo')
+    return redirect('todo')
+
+@login_required
+def new_task(request):
+    if request.method == 'POST':
+        form = AddTaskForm(request.POST)
+        if form.is_valid():
+            # Create task
+            task = form.save(commit=False)
+            task.user = request.user
+            task.save()
             return redirect('home')
     return redirect('todo')
+
 
 # create a new group
 @login_required

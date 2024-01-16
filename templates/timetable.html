@@ -1,0 +1,74 @@
+{% extends '_home_base.html' %}
+{% block content %}
+<style>
+    .mini-card {
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        color: #000000;
+    }
+    #day{
+        color: #1a1b25;
+    }
+    #delete-clase {
+        float: right;
+        color: #f2f4f3;
+        font-size: 24px;
+        margin-top: -8px;
+    }
+</style>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h4">Mi Horario: </h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group me-2">
+        <div>
+            <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#createTask" ><span class="material-symbols-outlined">
+                add
+                </span>
+            </span>Agregar materia</button>
+            <div class="modal fade" id="createTask" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Crear tareas</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    <form action="{% url 'add_subject' %} " method="post">
+                        {% csrf_token %}
+                        {{add_subject_form}}
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Agregar Materia</button>
+                    </div>
+                    </form>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="container" id="todo">
+    <div class="row">
+        {% for day in days %}
+        <div class="col-md-4">
+            <div class="mini-card">
+                <h4 id="day">{{ day }}</h4>
+                {% for subject in subjects|dictsort:"hour_start" %}
+                    {% if subject.get_day == day %}
+                    <div class="mini-card" style="background-color: {{ subject.color }} ; opacity: 80%;">
+                        <h5>{{ subject.name }} <a id="delete-clase" href="{% url 'delete_subject' subject.id %}"><span class="material-symbols-outlined">close</span></a></h5>
+                        <p><strong>Salon:</strong> {{ subject.clasroom }}</p>
+                        <p><strong>Horario:</strong> {{ subject.hour_start|time:"H:i" }} - {{ subject.hour_end|time:"H:i" }}</p>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

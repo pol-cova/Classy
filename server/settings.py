@@ -42,8 +42,9 @@ INSTALLED_APPS = [
     # APPS
     "users",
     "todo",
-    "remainders",
+    "timetable",
     "studyTimer",
+    "remainders",
     "generators",
 ]
 

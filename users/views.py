@@ -3,6 +3,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+import datetime
+import pytz
+
 
 # import forms
 from .forms import SignUpForm, LoginForm, EditProfileForm, EditBioForm
@@ -11,6 +14,9 @@ from .models import Profile
 # import from todo
 from todo.models import Task
 from todo.forms import AddTaskForm
+
+# import from timetable
+from timetable.models import Subject
 
 # index 
 def index(request):
@@ -28,11 +34,34 @@ def home(request):
         # count not completed for user
         tasks_count = Task.objects.filter(user=user, completed=False).count()
         form_task = AddTaskForm()
+        # get user subjects
+        subjects = Subject.objects.filter(user=user)
+        # timezone
+        tz = pytz.timezone('America/Mexico_City')
+        # todays date
+        today = datetime.datetime.now(tz=tz)
+        # get day of week
+        day = today.weekday()
+        # get day name
+        day_name = today.strftime("%A")
+
+        # days dict key:value -> day_name: spanish_name
+        DAYS = {
+            'Monday': 'Lunes',
+            'Tuesday': 'Martes',
+            'Wednesday': 'Miercoles',
+            'Thursday': 'Jueves',
+            'Friday': 'Viernes',
+            'Saturday': 'Sabado',
+            'Sunday': 'Domingo',
+        }
         context = {
             'user': user,
             'tasks': tasks,
             'tasks_count': tasks_count,
-            'form_task': form_task
+            'form_task': form_task,
+            'subjects': subjects,
+            'today': DAYS[day_name],
         }
         return render(request, 'home.html', context)
     else:

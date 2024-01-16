@@ -22,4 +22,5 @@ urlpatterns = [
     path('', include('users.urls')),# new
     path('todo/', include('todo.urls')),# new
     path('timer/', include('studyTimer.urls')),# new
+    path('timetable/', include('timetable.urls')),# new
 ]
