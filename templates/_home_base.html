@@ -168,7 +168,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="#">
+              <a class="nav-link d-flex align-items-center gap-2" href="{% url 'remainders' %}">
                 <span class="material-symbols-outlined">
                   notifications
                   </span>
@@ -176,7 +176,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link d-flex align-items-center gap-2" href="#">
+              <a class="nav-link d-flex align-items-center gap-2" href="{% url 'generators' %}">
                 <span class="material-symbols-outlined">
                   content_paste_search
                   </span>
@@ -262,10 +262,6 @@
               help
               </span>Ayuda</a>
           </div>
-          <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle d-flex align-items-center gap-1">
-            <svg class="bi"><use xlink:href="#calendar3"/></svg>
-            This week
-          </button>
         </div>
       </div>
       {% block content %}

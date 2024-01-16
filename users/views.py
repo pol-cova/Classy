@@ -18,6 +18,9 @@ from todo.forms import AddTaskForm
 # import from timetable
 from timetable.models import Subject
 
+# import from remainders
+from remainders.models import Remainder
+
 # index 
 def index(request):
     if request.user.is_authenticated:
@@ -33,6 +36,8 @@ def home(request):
         tasks = Task.objects.filter(user=user)
         # count not completed for user
         tasks_count = Task.objects.filter(user=user, completed=False).count()
+        # count not completed remainders
+        remainders_count = Remainder.objects.filter(user=user, is_completed=False).count()
         form_task = AddTaskForm()
         # get user subjects
         subjects = Subject.objects.filter(user=user)
@@ -58,6 +63,7 @@ def home(request):
         context = {
             'user': user,
             'tasks': tasks,
+            'remainders_count': remainders_count,
             'tasks_count': tasks_count,
             'form_task': form_task,
             'subjects': subjects,
