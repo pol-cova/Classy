@@ -21,6 +21,10 @@ from timetable.models import Subject
 # import from remainders
 from remainders.models import Remainder
 
+# import from notes
+from notes.models import Note
+
+
 # index 
 def index(request):
     if request.user.is_authenticated:
@@ -41,6 +45,8 @@ def home(request):
         form_task = AddTaskForm()
         # get user subjects
         subjects = Subject.objects.filter(user=user)
+        # get user notes
+        notes_count = Note.objects.filter(owner=user).count()
         # timezone
         tz = pytz.timezone('America/Mexico_City')
         # todays date
@@ -68,6 +74,7 @@ def home(request):
             'form_task': form_task,
             'subjects': subjects,
             'today': DAYS[day_name],
+            'notes_count': notes_count,
         }
         return render(request, 'home.html', context)
     else:

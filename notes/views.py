@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import NoteForm
+from .models import Note
 
 # Subject model
 from timetable.models import Subject
@@ -9,9 +10,12 @@ def notes(request):
     form = NoteForm()
     # get user subjects
     subjects = Subject.objects.filter(user=request.user)
+    # get user notes
+    notes = Note.objects.filter(owner=request.user)
     context = {
         'form': form,
-        'subjects': subjects,}
+        'subjects': subjects,
+        'notes': notes,}
     return render(request, 'notes.html', context)
 
 # add_note
@@ -31,3 +35,24 @@ def add_note (request):
     # display a blank or invalid form
     context = {'form': form}
     return render(request, 'note.html', context)
+
+# edit_note
+def edit_note (request, note_id):
+    note = Note.objects.get(id=note_id)
+    if request.method != 'POST':
+        # initial request; pre-fill form with the current note
+        form = NoteForm(instance=note)
+    else:
+        # POST data submitted; process data
+        form = NoteForm(instance=note, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('notes')
+    context = {'note': note, 'form': form}
+    return render(request, 'edit_note.html', context)
+
+# delete_note
+def delete_note (request, note_id):
+    note = Note.objects.get(id=note_id)
+    note.delete()
+    return redirect('notes')
