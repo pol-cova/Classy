@@ -11,6 +11,7 @@ class Post(models.Model):
     likes = models.ManyToManyField(User, related_name='likes', blank=True)
     dislikes = models.ManyToManyField(User, related_name='dislikes', blank=True)
 
+
     def __str__(self):
         return f"{self.user} - {self.content[:20]}"
     
