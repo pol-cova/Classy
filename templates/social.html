@@ -1,0 +1,86 @@
+{% extends '_home_base.html' %}
+{% block content %}
+<style>
+.post-card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.user-avatar {
+  float: left;
+  margin-right: 10px;
+}
+
+.user-avatar img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.user-info {
+  overflow: hidden; /* Prevent text from wrapping under avatar */
+}
+
+.user-name {
+  font-weight: bold;
+}
+
+.post-time {
+  color: #999;
+  font-size: 12px;
+}
+
+.post-content {
+  clear: both; /* Clear the float from the avatar */
+  margin-top: 10px;
+}
+
+.post-footer {
+  text-align: right;
+  margin-top: 10px;
+}
+
+.btn-like,
+.btn-comment,
+.btn-share {
+  background-color: #f0f0f0;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.btn-like:hover,
+.btn-comment:hover,
+.btn-share:hover {
+  background-color: #e0e0e0;
+}
+
+</style>
+
+<div class="container">
+    <!-- post_card_template.html -->
+<div class="post-card">
+    <div class="post-header">
+        <div class="user-avatar">
+            <!-- User avatar or profile picture -->
+        </div>
+        <div class="user-info">
+            <h4 class="user-name">John Doe</h4>
+            <p class="post-time">Posted on January 26, 2024</p>
+        </div>
+    </div>
+    <div class="post-content">
+        <p>This is the post content. It can be as long as needed, and it will be truncated if necessary.</p>
+    </div>
+    <div class="post-footer">
+        <button class="btn-like">Like</button>
+        <button class="btn-comment">Comment</button>
+        <button class="btn-share">Share</button>
+    </div>
+</div>
+
+</div>
+{% endblock %}

@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 # Post
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100, blank=True)
     content = models.TextField(max_length=500)
     created = models.DateTimeField(auto_now_add=True)
     likes = models.ManyToManyField(User, related_name='likes', blank=True)

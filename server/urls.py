@@ -24,6 +24,6 @@ urlpatterns = [
     path('timer/', include('studyTimer.urls')),
     path('timetable/', include('timetable.urls')),
     path('remainder/', include('remainders.urls')),
-    #path('social/', include('social.urls')),
+    path('social/', include('social.urls')),
     path('notes/', include('notes.urls')),
 ]
