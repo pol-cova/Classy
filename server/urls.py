@@ -26,4 +26,5 @@ urlpatterns = [
     path('remainder/', include('remainders.urls')),
     path('social/', include('social.urls')),
     path('notes/', include('notes.urls')),
+    path('support/', include('support.urls')),
 ]

@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     "remainders",
     "social",
     "notes",
+    # SUPPORT
+    "support",
 ]
 
 MIDDLEWARE = [

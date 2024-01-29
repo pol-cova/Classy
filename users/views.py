@@ -27,7 +27,9 @@ from notes.models import Note
 
 # index 
 def index(request):
-    if request.user.is_authenticated:
+    if request.user.is_staff:
+        return redirect('support_tickets')
+    elif request.user.is_authenticated:
         return redirect('home')
     else:
         form = LoginForm()
@@ -35,7 +37,9 @@ def index(request):
 
 # dashboard
 def home(request):
-    if request.user.is_authenticated:
+    if request.user.is_staff:
+        return redirect('support_tickets')
+    elif request.user.is_authenticated:
         user = request.user
         tasks = Task.objects.filter(user=user)
         # count not completed for user
