@@ -1,5 +1,5 @@
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, permission_required
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Ticket
 from .forms import TicketForm
 
@@ -39,3 +39,11 @@ def support_tickets(request):
         'tickets': tickets
     }
     return render(request, 'support_tickets.html', context)
+
+# complete tickets
+@login_required
+def complet_ticket(request, ticket_id):
+    ticket = get_object_or_404(Ticket, id=ticket_id)
+    ticket.status = True
+    ticket.save()
+    return redirect('support_tickets')

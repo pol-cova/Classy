@@ -55,8 +55,11 @@
         </span></a>
         <h1 id="header">Classy Soporte</h1>
     </div>
+    <div id="tickets-pendientes">
     <h4 id="text">Tickets pendientes</h4>
     <table class="table">
+        {% for ticket in tickets %}
+        {% if ticket.status == False %}
         <thead>
         <tr>
             <th scope="col">#</th>
@@ -69,15 +72,75 @@
         </thead>
         <tbody>
         <tr>
-            <th scope="row">1</th>
-            <td>Mar</td>
-            <td>example@example.com</td>
-            <td>12/12/2020</td>
-            <td><button class="btn btn-dark">Detalles</button></td>
-            <td><span class="material-symbols-outlined">check_box_outline_blank</span></td>
+            <th scope="row">{{ ticket.id }}</th>
+            <td>{{ ticket.name }}</td>
+            <td>{{ ticket.email }}</td>
+            <td>{{ ticket.date }}</td>
+            <td><button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#ticket-details">Detalles</button></td>
+            <!-- Modal -->
+            <div class="modal fade" id="ticket-details" tabindex="-1" aria-labelledby="ticket-detailsLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="ticket-detailsLabel">Detalles del ticket </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    {{ ticket.report }}
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <td><form action="{% url 'complet_ticket' ticket.id %}" method="post">{% csrf_token %}<button class="btn" type="submit"><span class="material-symbols-outlined">check_box_outline_blank</span></button></form></td>
         </tr>
         </tbody>
+        {% endif %}
+        {% endfor %}
     </table>
+    </div>
+    {% for ticket in tickets %}
+    {% if ticket.status == True %}
+    <div id="tickets-resueltos">
+    <h4 id="text">Tickets Resueltos</h4>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Fecha de solicitud</th>
+            <th scope="col">Problema</th>
+            <th scope="col">Status</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">{{ ticket.id }}</th>
+                <td>{{ ticket.name }}</td>
+                <td>{{ ticket.email }}</td>
+                <td>{{ ticket.date }}</td>
+                <td><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ticket-details">Detalles</button></td>
+                <!-- Modal -->
+                <div class="modal fade" id="ticket-details" tabindex="-1" aria-labelledby="ticket-detailsLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="ticket-detailsLabel">Detalles del ticket </h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        {{ ticket.report }}
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <td><span class="material-symbols-outlined">check_box</span></td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    {% endif %}
+    {% endfor %}
 </div>
 </body>
 {% endblock %}
