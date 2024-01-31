@@ -47,3 +47,10 @@ def complet_ticket(request, ticket_id):
     ticket.status = True
     ticket.save()
     return redirect('support_tickets')
+
+# delete tickets
+@login_required
+def delete_ticket(request, ticket_id):
+    ticket = get_object_or_404(Ticket, id=ticket_id)
+    ticket.delete()
+    return redirect('support_tickets')

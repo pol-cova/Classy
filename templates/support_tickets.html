@@ -111,6 +111,7 @@
             <th scope="col">Fecha de solicitud</th>
             <th scope="col">Problema</th>
             <th scope="col">Status</th>
+            <th scope="col">Eliminar</th>
         </tr>
         </thead>
         <tbody>
@@ -120,7 +121,7 @@
                 <td>{{ ticket.email }}</td>
                 <td>{{ ticket.date }}</td>
                 <td><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ticket-details">Detalles</button></td>
-                <!-- Modal -->
+                <!-- Details Modal -->
                 <div class="modal fade" id="ticket-details" tabindex="-1" aria-labelledby="ticket-detailsLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -135,6 +136,27 @@
                     </div>
                 </div>
                 <td><span class="material-symbols-outlined">check_box</span></td>
+                <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ticket-delete"><span class="material-symbols-outlined">delete</span></button></td>
+                <!-- Details Modal -->
+                <div class="modal fade" id="ticket-delete" tabindex="-1" aria-labelledby="ticket-deleteLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="ticket-detailsLabel">Eliminar Ticket </h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        Esta seguro que desea eliminar el ticket # {{ticket.id}}?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <div id="form">
+                            <form action="{% url 'delete_ticket' ticket.id %}" method="post">{% csrf_token %}<button class="btn btn-danger" type="submit">Eliminar</button></form>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
             </tr>
         </tbody>
     </table>
