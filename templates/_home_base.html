@@ -191,6 +191,14 @@
                 Social
               </a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link d-flex align-items-center gap-2" href="{% url 'flash' %}">
+                <span class="material-symbols-outlined">
+                  style
+                  </span>
+                Flashcards <span class="badge bg-warning" style="color: #1a1b25;">BETA</span>
+              </a>
+            </li>
           </ul>
 
           <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-body-secondary text-uppercase">
@@ -261,6 +269,27 @@
             <a href="{% url 'support_home' %}" class="btn btn-sm btn-outline-secondary"> <span class="material-symbols-outlined">
               help
               </span>Ayuda</a>
+              <button class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#newPost">New Post</button>
+    <div class="modal fade" id="newPost" tabindex="-1" aria-labelledby="newPostLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="newPostLabel">Nuevo Post</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form action="{% url 'create_post' %}" method="post">
+          <div class="modal-body">
+            {% csrf_token %}
+            {{new_post_form}}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary">Postear</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
           </div>
         </div>
       </div>

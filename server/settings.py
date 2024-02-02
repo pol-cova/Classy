@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "remainders",
     "social",
     "notes",
+    "flashcards",
     # SUPPORT
     "support",
 ]

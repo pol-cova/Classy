@@ -27,4 +27,5 @@ urlpatterns = [
     path('social/', include('social.urls')),
     path('notes/', include('notes.urls')),
     path('support/', include('support.urls')),
+    path('flashcards/', include('flashcards.urls')),
 ]
