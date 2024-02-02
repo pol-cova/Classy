@@ -4,6 +4,7 @@ from .models import Subject
 from .forms import SubjectForm
 
 # Create your views here.
+@login_required
 def timetable(request):
     add_subject_form = SubjectForm()
     # Chek if user has subjects

@@ -126,11 +126,9 @@
         {% endfor %}
     </div>
     {% else %}
-    <div class="alert alert-warning d-flex align-items-center" role="alert">
-        <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-        <div>
-            Aun no tienes grupos de cartas, crea uno ahora!
-        </div>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>No tines ningun grupo creado!</strong> No te preocupes, crea uno ahora!.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     {% endif %}
 </div>

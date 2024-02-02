@@ -17,6 +17,7 @@ def index(request):
     return render(request, 'remainders.html', context)
 
 # create remainder
+@login_required
 def create_remainder(request):
     if request.method == 'POST':
         form = ReminderForm(request.POST)
@@ -32,6 +33,7 @@ def create_remainder(request):
     return redirect('remainders')
 
 # complete remainder
+@login_required
 def complete_remainder(request, remainder_id):
     remainder = Remainder.objects.get(pk=remainder_id)
     remainder.is_completed = True
@@ -39,6 +41,7 @@ def complete_remainder(request, remainder_id):
     return redirect('remainders')
 
 # uncomplete remainder
+@login_required
 def uncomplete_remainder(request, remainder_id):
     remainder = Remainder.objects.get(pk=remainder_id)
     remainder.is_completed = False
@@ -46,12 +49,14 @@ def uncomplete_remainder(request, remainder_id):
     return redirect('remainders')
 
 # delete remainder
+@login_required
 def delete_remainder(request, remainder_id):
     remainder = Remainder.objects.get(pk=remainder_id)
     remainder.delete()
     return redirect('remainders')
 
 # update remainder
+@login_required
 def update_remainder(request, remainder_id):
     remainder = Remainder.objects.get(pk=remainder_id)
     form = ReminderForm(instance=remainder)

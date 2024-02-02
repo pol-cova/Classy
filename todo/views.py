@@ -4,6 +4,7 @@ from .models import Task, Group
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
+@login_required
 def todo(request):
     # Form for add a new task
     form_task = AddTaskForm()

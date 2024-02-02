@@ -17,14 +17,19 @@
             font-family: 'Inconsolata', monospace;
         }
         #nav {
-            width: 100%;
-            text-align: center;
-            margin: 20px auto; /* Adjusted margin */
-            font-size: 48px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 10px; /* optional padding */
         }
         #header {
             color: #f2f4f3;
             font-size: 48px;
+            font-size:4vw;
         }
         .flashcard-grid {
             display: grid;
@@ -37,16 +42,34 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+        #back-home{
+            position: absolute;
+            background-color: #F7B32B;
+            left: 20px;
+        }
+        #add-card{
+            position: absolute;
+            right: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div id="nav">
-            <a href="{% url 'home' %}" id="back-home"><span class="material-symbols-outlined">
+            <a href="{% url 'flash' %}" id="back-home" class="btn"><span class="material-symbols-outlined">
                 home
             </span></a>
-            <h1 class="text-center" id="header">Estudio ✍️</h1>
+            <button id="add-card" class="btn btn-light"><span class="material-symbols-outlined">
+                add
+            </span></button>
+            <h1 class="text-center" id="header">FlashCards de {{card_group.name}} 📚</h1>
         </div>
+        {% if cards.count == 0 %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>No tienes ninguna flashcard creada!</strong> No te preocupes crea una ahora!.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% else %}
         <div class="flashcard-grid">
             {% for card in card_group.cards %}
                 <div class="flashcard">
@@ -55,6 +78,7 @@
                 </div>
             {% endfor %}
         </div>
+        {% endif %}
     </div>
 </body>
 {% endblock %}
