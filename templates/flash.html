@@ -16,7 +16,7 @@
         margin-bottom: 20px;
     }
 
-    h1 {
+    #hd {
         margin-top: 20px;
         font-size: 2em;
         color: #D7263D;
@@ -86,22 +86,52 @@
         <button id="trivia" class="custom-btn">
             <span class="emote">😄</span> Trivia
         </button>
-        <button id="add-card" class="custom-btn">
+        <button id="add-card" class="custom-btn" data-bs-toggle="modal" data-bs-target="#newGroup">
             <span class="emote">🔥</span> Crear grupos de cartas
         </button>
-    </div>
-    <h1>Mis grupos: </h1>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card p-3 custom-card">
-                <div class="card-body">
-                    <h5 class="card-title">Grupo 1</h5>
-                    <p class="card-text">Descripción del grupo 1</p>
-                    <a href="#" class="btn btn-primary">Ver grupo</a>
+        <div class="modal fade" id="newGroup" tabindex="-1" aria-labelledby="newGroupLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="newGroupLabel">Agregar grupo de cartas</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{% url 'create-card-group' %}" method="post">
+                    {% csrf_token %}
+                <div class="modal-body">
+                    {{new_card_group_form}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-ligth" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-dark">Crear grupo</button>
+                </div>
+                </form>
                 </div>
             </div>
         </div>
-        <!-- Add more cards as needed -->
     </div>
+    <h1 id="hd">Mis grupos: </h1>
+    {% if card_groups %}
+    <div class="row">
+        {% for group in card_groups %}
+        <div class="col-md-6">
+            <div class="card p-3 custom-card">
+                <div class="card-body">
+                    <h5 class="card-title">{{group.name}}</h5>
+                    <p class="card-text">{{group.subject}}</p>
+                    <a href="{% url 'flash-cards' group.id %}" class="btn btn-primary">Ver grupo</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-warning d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+        <div>
+            Aun no tienes grupos de cartas, crea uno ahora!
+        </div>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

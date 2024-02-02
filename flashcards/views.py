@@ -1,5 +1,34 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .forms import CardGroupForm, CardForm
+from .models import CardGroup, Card
 
-# Create your views here.
+# Renders  
 def index(request):
-    return render(request, 'flash.html')
+    # get users card groups
+    card_groups = CardGroup.objects.filter(user=request.user)
+    context = {
+        'new_card_group_form': CardGroupForm(),
+        'card_groups': card_groups
+    }
+    return render(request, 'flash.html', context)
+
+# Flash cards view
+def flash_cards(request, card_group_id):
+    # get card group
+    card_group = CardGroup.objects.get(id=card_group_id)
+
+    context = {
+        'card_group': card_group
+    }
+    return render(request, 'flash-cards.html', context)
+
+# Logic section
+# Create a new card group
+def create_card_group(request):
+    if request.method == 'POST':
+        form = CardGroupForm(request.POST)
+        if form.is_valid():
+            form.instance.user = request.user
+            form.save()
+    return redirect('flash')
+
