@@ -23,6 +23,7 @@ def flash_cards(request, card_group_id):
     context = {
         'card_group': card_group,
         'cards': cards,
+        'new_card_form': CardForm()
     }
     return render(request, 'flash-cards.html', context)
 
@@ -37,3 +38,13 @@ def create_card_group(request):
             form.save()
     return redirect('flash')
 
+@login_required
+def create_card(request, card_group_id):
+    if request.method == 'POST':
+        form = CardForm(request.POST)
+        if form.is_valid():
+            form.instance.card_group = CardGroup.objects.get(id=card_group_id)
+            # add user
+            form.instance.user = request.user
+            form.save()
+    return redirect('flash-cards', card_group_id=card_group_id)

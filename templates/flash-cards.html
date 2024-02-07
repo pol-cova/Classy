@@ -59,11 +59,28 @@
             <a href="{% url 'flash' %}" id="back-home" class="btn"><span class="material-symbols-outlined">
                 home
             </span></a>
-            <button id="add-card" class="btn btn-light"><span class="material-symbols-outlined">
+            <button id="add-card" class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#newCard"><span class="material-symbols-outlined">
                 add
             </span></button>
             <h1 class="text-center" id="header">FlashCards de {{card_group.name}} 📚</h1>
         </div>
+        <div class="modal fade" id="newCard" tabindex="-1" aria-labelledby="newCardLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="newCardLabel">Nueva Flash card</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                        <form action="{% url 'create-card' card_group.id %}" method="post" class="ml-2">
+                            {% csrf_token %}
+                            {{new_card_form}}
+                            <button type="submit" class="btn btn-primary">Crear</button>
+                        </form>
+                </div>
+                </div>
+                </div>
+            </div>
         {% if cards.count == 0 %}
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
             <strong>No tienes ninguna flashcard creada!</strong> No te preocupes crea una ahora!.
@@ -71,10 +88,10 @@
         </div>
         {% else %}
         <div class="flashcard-grid">
-            {% for card in card_group.cards %}
+            {% for card in cards %}
                 <div class="flashcard">
-                    <h2>{{ card.title }}</h2>
-                    <p>{{ card.content }}</p>
+                    <h2>{{ card.question }}</h2>
+                    <button class="btn btn-outline-dark">Respuesta</button>
                 </div>
             {% endfor %}
         </div>
