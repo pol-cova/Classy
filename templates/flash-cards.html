@@ -41,6 +41,11 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
         #back-home{
             position: absolute;
@@ -51,6 +56,25 @@
             position: absolute;
             right: 20px;
         }
+
+        .flashcard .answer {
+    display: none;
+    transition: opacity 0.5s ease-in-out;
+    }
+
+    .flashcard.show-answer .answer {
+    display: block;
+    opacity: 1;
+    }
+
+    #answer {
+        color: #D7263D;
+        font-size: 18px;
+    }
+
+    #delete-card {
+        font-size: smaller;
+    }
     </style>
 </head>
 <body>
@@ -91,8 +115,17 @@
             {% for card in cards %}
                 <div class="flashcard">
                     <h2>{{ card.question }}</h2>
-                    <button class="btn btn-outline-dark">Respuesta</button>
+                    <div class="flash-nav">
+                        <button class="btn btn-outline-dark" onclick="showAnswer(this)">Respuesta</button>
+                    </div>
+                    <p id="answer" class="answer">{{ card.answer }}</p>
                 </div>
+                <script>
+                    function showAnswer(button) {
+                    var flashcard = button.closest('.flashcard');
+                    flashcard.classList.toggle('show-answer');
+                    }
+                </script>
             {% endfor %}
         </div>
         {% endif %}
