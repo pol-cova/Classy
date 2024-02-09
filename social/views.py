@@ -73,10 +73,10 @@ def create_comment(request, post_id):
             comment.post = post
             # save comment to database
             comment.save()
-            return redirect('social_home')
+            return redirect('details', post_id=comment.post.id)
     else:
         form = CommentForm()
-    return redirect('social_home')
+    return redirect('details', post_id=comment.post.id)
 
 # like comment
 @login_required
@@ -87,7 +87,7 @@ def like_comment(request, comment_id):
         comment.dislikes.remove(request.user)
     else:
         comment.likes.add(request.user)
-    return redirect('social_home')
+    return redirect('details', post_id=comment.post.id)
 
 # dislike comment
 @login_required
@@ -97,5 +97,16 @@ def dislike_comment(request, comment_id):
         comment.likes.remove(request.user)
     else:
         comment.dislikes.add(request.user)
-    return redirect('social_home')
+    return redirect('details', post_id=comment.post.id)
 
+# post detail
+@login_required
+def post_detail(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    comments = Comment.objects.filter(post=post).order_by('-created')
+    context = {
+        'post': post,
+        'comments': comments,
+        'comment_form': CommentForm()
+    }
+    return render(request, 'post-detail.html', context)
