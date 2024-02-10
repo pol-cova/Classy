@@ -1,81 +1,12 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <style>
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #1a1b25;
-            margin: 0;
-            font-family: 'Inconsolata', monospace;
-        }
-        #nav {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        padding: 10px; /* optional padding */
-        }
-        #header {
-            color: #f2f4f3;
-            font-size: 48px;
-            font-size:4vw;
-        }
-        .flashcard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        .flashcard {
-            background-color: #f0f0f0;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            align-items: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-        #back-home{
-            position: absolute;
-            background-color: #F7B32B;
-            left: 20px;
-        }
-        #add-card{
-            position: absolute;
-            right: 20px;
-        }
-
-        .flashcard .answer {
-    display: none;
-    transition: opacity 0.5s ease-in-out;
-    }
-
-    .flashcard.show-answer .answer {
-    display: block;
-    opacity: 1;
-    }
-
-    #answer {
-        color: #D7263D;
-        font-size: 18px;
-    }
-
-    #delete-card {
-        font-size: smaller;
-    }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/flashcards.css' %}">
 </head>
 <body>
     <div class="container">
@@ -83,6 +14,11 @@
             <a href="{% url 'flash' %}" id="back-home" class="btn"><span class="material-symbols-outlined">
                 home
             </span></a>
+            {% if cards.count == 0 %}
+            <button class="btn btn-danger" id="delete-card" disabled><span class="material-symbols-outlined">delete</span></button>
+            {% else %}
+            <button class="btn btn-danger" id="delete-card" data-bs-toggle="modal" data-bs-target="#delete"><span class="material-symbols-outlined">delete</span></button>
+            {% endif %}
             <button id="add-card" class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#newCard"><span class="material-symbols-outlined">
                 add
             </span></button>
@@ -104,30 +40,45 @@
                 </div>
                 </div>
                 </div>
+        </div>
+        <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="deleteLabel">Borrar cartas</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                <div class="modal-body">
+                    <strong>Esto borra todas las cartas de este grupo</strong>, desea continuar?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cerrar</button>
+                    <a class="btn btn-danger" href="{% url 'delete-cards' card_group.id  %}">Si, continuar</a>
+                </div>
             </div>
+            </div>
+        </div>
+        
         {% if cards.count == 0 %}
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
             <strong>No tienes ninguna flashcard creada!</strong> No te preocupes crea una ahora!.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         {% else %}
-        <div class="flashcard-grid">
-            {% for card in cards %}
-                <div class="flashcard">
-                    <h2>{{ card.question }}</h2>
-                    <div class="flash-nav">
-                        <button class="btn btn-outline-dark" onclick="showAnswer(this)">Respuesta</button>
+            <div class="flashcard-grid">
+                {% for card in cards %}
+                <div class="flip-card">
+                    <div class="flip-card-inner" tab-index="0">
+                    <div class="flip-card-front">
+                        <h2>{{card.question}}</h2>
                     </div>
-                    <p id="answer" class="answer">{{ card.answer }}</p>
+                    <div class="flip-card-back">
+                        <p>{{card.answer}}</p>
+                    </div>
+                    </div>
                 </div>
-                <script>
-                    function showAnswer(button) {
-                    var flashcard = button.closest('.flashcard');
-                    flashcard.classList.toggle('show-answer');
-                    }
-                </script>
-            {% endfor %}
-        </div>
+                {% endfor %}
+            </div>
         {% endif %}
     </div>
 </body>

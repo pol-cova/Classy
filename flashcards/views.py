@@ -48,3 +48,9 @@ def create_card(request, card_group_id):
             form.instance.user = request.user
             form.save()
     return redirect('flash-cards', card_group_id=card_group_id)
+
+# Delete all cards in a card group
+@login_required
+def delete_cards(request, card_group_id):
+    Card.objects.filter(card_group=card_group_id).delete()
+    return redirect('flash-cards', card_group_id=card_group_id)
