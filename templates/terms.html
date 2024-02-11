@@ -1,0 +1,37 @@
+{% extends 'support.html' %}
+{% block section %}
+<style>
+    h1, h2, h3 {
+        color: #333;
+    }
+    footer {
+        margin-top: 50px;
+        color: #777;
+    }
+</style>
+<div class="container">
+    <h1 class="mt-5">Términos y Condiciones</h1>
+
+    <h2 class="mt-4">Protección de Datos</h2>
+    <p>En <strong>Classy</strong>, nos tomamos muy en serio la protección de tus datos personales. Recopilamos y procesamos únicamente la información necesaria para proporcionarte nuestros servicios, y nos comprometemos a mantenerla segura y protegida.</p>
+    
+    <h2 class="mt-4">Recopilación Mínima de Información</h2>
+    <p>Solo recopilamos la información estrictamente necesaria para ofrecerte nuestros servicios. No recopilamos ni almacenamos información personal adicional sin tu consentimiento explícito.</p>
+
+    <h2 class="mt-4">Uso de la Información</h2>
+    <p>La información que recopilamos se utiliza únicamente con el propósito de mejorar nuestros servicios y brindarte una experiencia personalizada. No compartiremos ni venderemos tus datos personales a terceros sin tu consentimiento.</p>
+
+    <h2 class="mt-4">Seguridad de los Datos</h2>
+    <p>Implementamos medidas de seguridad robustas para proteger tus datos personales contra accesos no autorizados, alteraciones, divulgaciones o destrucciones no autorizadas. Utilizamos tecnologías y prácticas de seguridad de última generación para garantizar la confidencialidad e integridad de tus datos.</p>
+
+    <h2 class="mt-4">Consentimiento</h2>
+    <p>Al utilizar nuestros servicios, aceptas nuestras políticas de privacidad y términos y condiciones. Si no estás de acuerdo con alguna de nuestras prácticas de recopilación o uso de datos, te recomendamos que no utilices nuestro sitio web.</p>
+
+    <h2 class="mt-4">Contacto</h2>
+    <p>Si tienes alguna pregunta o inquietud sobre nuestra política de privacidad o términos y condiciones, no dudes en contactarnos en <a class="btn btn-dark" href="{% url 'contact' %}">Contactanos</a>.</p>
+
+    <footer class="mt-5">
+        <p>Última actualización: Feb. 2024</p>
+    </footer>
+</div>
+{% endblock %}

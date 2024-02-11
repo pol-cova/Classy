@@ -1,0 +1,22 @@
+{% extends 'support.html' %}
+{% block section %}
+<div class="container">
+    <div class="text-center mt-5">
+        <h1 class="mb-4">Classy Soporte</h1>
+        <h4>Reportar un problema</h4>
+        {% if message %}
+        <div class="alert alert-warning mt-4" role="alert">
+            <p>{{ message }}</p>
+        </div>
+        {% else %}
+        <div class="mt-4">
+            <form action="{% url 'support_save' %}" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-danger">Enviar</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

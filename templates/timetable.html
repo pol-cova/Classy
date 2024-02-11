@@ -23,15 +23,15 @@
     <div class="btn-toolbar mb-2 mb-md-0">
         <div class="btn-group me-2">
         <div>
-            <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#createTask" ><span class="material-symbols-outlined">
+            <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#addSubject" ><span class="material-symbols-outlined">
                 add
                 </span>
             </span>Agregar materia</button>
-            <div class="modal fade" id="createTask" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="addSubject" tabindex="-1" aria-labelledby="addSubjectLabel" aria-hidden="true">
                 <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Crear tareas</h1>
+                        <h1 class="modal-title fs-5" id="addSubjectLabel">Crear tareas</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -39,7 +39,7 @@
                         {% csrf_token %}
                         {{add_subject_form}}
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-success">Agregar Materia</button>
                     </div>
                     </form>

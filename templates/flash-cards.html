@@ -8,38 +8,45 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link rel="stylesheet" href="{% static 'css/flashcards.css' %}">
 </head>
-<body>
+<body class="body">
     <div class="container">
-        <div id="nav">
-            <a href="{% url 'flash' %}" id="back-home" class="btn"><span class="material-symbols-outlined">
-                home
-            </span></a>
-            {% if cards.count == 0 %}
-            <button class="btn btn-danger" id="delete-card" disabled><span class="material-symbols-outlined">delete</span></button>
-            {% else %}
-            <button class="btn btn-danger" id="delete-card" data-bs-toggle="modal" data-bs-target="#delete"><span class="material-symbols-outlined">delete</span></button>
-            {% endif %}
-            <button id="add-card" class="btn btn-light" type="button" data-bs-toggle="modal" data-bs-target="#newCard"><span class="material-symbols-outlined">
-                add
-            </span></button>
-            <h1 class="text-center" id="header">FlashCards de {{card_group.name}} 📚</h1>
-        </div>
+        <nav class="navbar navbar-dark bg-dark fixed-top">
+            <div class="mx-auto d-flex">
+                <h1 class="navbar-brand" id="header">FlashCards de {{card_group.name}} 📚</h1>
+            </div>
+            <div class="ml-auto">
+                <a class="btn btn-light" href="{% url 'home' %}"><span class="material-symbols-outlined">home</span></a>
+                {% if cards.count == 0 %}
+                <button class="btn btn-danger" disabled>
+                    <span class="material-symbols-outlined">delete</span>
+                </button>
+                {% else %}
+                <button type="button" class="btn btn-danger" id="delete-card" data-bs-toggle="modal" data-bs-target="#delete">
+                    <span class="material-symbols-outlined">delete</span>
+                </button>
+                {% endif %}
+                <button type="button" id="add-card" class="btn btn-light"  data-bs-toggle="modal" data-bs-target="#newCard">
+                    <span class="material-symbols-outlined">add</span>
+                </button>
+            </div>
+        </nav>
         <div class="modal fade" id="newCard" tabindex="-1" aria-labelledby="newCardLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="newCardLabel">Nueva Flash card</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="newCardLabel">Nueva Flash card</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
                         <form action="{% url 'create-card' card_group.id %}" method="post" class="ml-2">
                             {% csrf_token %}
                             {{new_card_form}}
-                            <button type="submit" class="btn btn-primary">Crear</button>
+                            <br>
+                            <button type="submit" class="btn btn-dark">Crear</button>
                         </form>
+                    </div>
                 </div>
-                </div>
-                </div>
+            </div>
         </div>
         <div class="modal fade" id="delete" tabindex="-1" aria-labelledby="deleteLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -65,16 +72,18 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         {% else %}
-            <div class="flashcard-grid">
+            <div class="flashcard-grid row row-cols-1 row-cols-md-2 row-cols-lg-3">
                 {% for card in cards %}
-                <div class="flip-card">
-                    <div class="flip-card-inner" tab-index="0">
-                    <div class="flip-card-front">
-                        <h2>{{card.question}}</h2>
-                    </div>
-                    <div class="flip-card-back">
-                        <p>{{card.answer}}</p>
-                    </div>
+                <div class="col mb-4">
+                    <div class="card flip-card h-100">
+                        <div class="card-body flip-card-inner">
+                            <div class="flip-card-front">
+                                <h2 class="card-title">{{card.question}}</h2>
+                            </div>
+                            <div class="flip-card-back">
+                                <p class="card-text">{{card.answer}}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 {% endfor %}

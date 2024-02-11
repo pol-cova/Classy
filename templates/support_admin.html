@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load static %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+{% block content %}
+{% include 'partials/_support_nav_admin.html' %}
+<style>
+    .stats-container {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    .stat {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .stat-value {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .stat-label {
+      font-size: 18px;
+      color: #6c757d;
+    }
+  </style>
+<body>
+    {% block section %}
+    <br>
+    <div class="container">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="stats-container">
+              <div class="stat">
+                <div class="stat-value">{{total_users}}</div>
+                <div class="stat-label">Usuarios Totales</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="stats-container">
+              <div class="stat">
+                <div class="stat-value">{{total_posts}}</div>
+                <div class="stat-label">Post Totales</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="stats-container">
+              <div class="stat">
+                <div class="stat-value">{{total_comments}}</div>
+                <div class="stat-label">Comentarios totales</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="stats-container">
+              <div class="stat">
+                <div class="stat-value">{{total_tickets}}</div>
+                <div class="stat-label">Reportes totales</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <br>
+    <div class="container">
+        <div id="tickets-pendientes">
+        <h4 id="text">Tickets pendientes</h4>
+        <table class="table">
+            {% for ticket in tickets %}
+            {% if not ticket.status %}
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Fecha de solicitud</th>
+                <th scope="col">Problema</th>
+                <th scope="col">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">{{ ticket.id }}</th>
+                <td>{{ ticket.name }}</td>
+                <td>{{ ticket.email }}</td>
+                <td>{{ ticket.date }}</td>
+                <td><button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#ticket-details-{{ ticket.id }}">Detalles</button></td>
+                <!-- Modal -->
+                <div class="modal fade" id="ticket-details-{{ ticket.id }}" tabindex="-1" aria-labelledby="ticket-detailsLabel-{{ ticket.id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="ticket-detailsLabel-{{ ticket.id }}">Detalles del ticket </h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        {{ ticket.report }}
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <td><form action="{% url 'complet_ticket' ticket.id %}" method="post">{% csrf_token %}<button class="btn" type="submit"><span class="material-symbols-outlined">check_box_outline_blank</span></button></form></td>
+            </tr>
+            </tbody>
+            {% endif %}
+            {% endfor %}
+        </table>
+        </div>
+        
+        <div id="tickets-resueltos">
+        <h4 id="text">Tickets Resueltos</h4>
+        <table class="table">
+        {% for ticket in tickets %}
+        {% if ticket.status %}
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Fecha de solicitud</th>
+                <th scope="col">Problema</th>
+                <th scope="col">Status</th>
+                <th scope="col">Eliminar</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">{{ ticket.id }}</th>
+                    <td>{{ ticket.name }}</td>
+                    <td>{{ ticket.email }}</td>
+                    <td>{{ ticket.date }}</td>
+                    <td><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ticket-details-{{ ticket.id }}">Detalles</button></td>
+                    <!-- Details Modal -->
+                    <div class="modal fade" id="ticket-details-{{ ticket.id }}" tabindex="-1" aria-labelledby="ticket-detailsLabel-{{ ticket.id }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="ticket-detailsLabel-{{ ticket.id }}">Detalles del ticket </h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                            {{ ticket.report }}
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <td><span class="material-symbols-outlined">check_box</span></td>
+                    <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ticket-delete-{{ ticket.id }}"><span class="material-symbols-outlined">delete</span></button></td>
+                    <!-- Delete Modal -->
+                    <div class="modal fade" id="ticket-delete-{{ ticket.id }}" tabindex="-1" aria-labelledby="ticket-deleteLabel-{{ ticket.id }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="ticket-deleteLabel-{{ ticket.id }}">Eliminar Ticket </h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                            ¿Está seguro de que desea eliminar el ticket # {{ticket.id}}?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <div id="form">
+                                <form action="{% url 'delete_ticket' ticket.id %}" method="post">{% csrf_token %}<button class="btn btn-danger" type="submit">Eliminar</button></form>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </tr>
+            </tbody>
+            {% endif %}
+            {% endfor %}
+        </table>
+        </div>
+        
+    </div>
+    {% endblock %}
+</body>
+{% endblock %}
