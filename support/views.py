@@ -4,7 +4,9 @@ from .models import Ticket
 from .forms import TicketForm
 from django.contrib.auth.models import User
 from social.models import Post, Comment
-# Create your views here.
+# Mail settings
+from django.core.mail import send_mail
+from django.conf import settings
 # admin dash
 def admin_dash(request, token):
     if token == 'admin':
@@ -43,12 +45,21 @@ def support_save(request):
     if request.method == 'POST':
         form = TicketForm(request.POST)
         if form.is_valid():
+            # user mail
+            mail = form.cleaned_data['email']
             form.save()
             form = TicketForm()
             context = {
                 'form': form,
                 'message': 'Tu reporte se ha creado correctamente, pronto nos pondremos en contacto contigo.'
             }
+            # send email
+            subject = "noreply: Classy | Gracias por tu reporte"
+            message = "Gracias por tu reporte, pronto nos pondremos en contacto contigo."
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [mail]
+            send_mail(subject, message, email_from, recipient_list)
+
             return render(request, 'contact.html', context)
         else:
             context = {
