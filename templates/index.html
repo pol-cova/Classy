@@ -1,109 +1,108 @@
 {% extends 'base.html' %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
-</head>
-<style>
-    .custom-h1 {
-    color: #F2F4F5;
-}
-</style>
-<body class="content">
-    {% block content %}
-    <div class="text-secondary px-4 py-5 text-center" style="background-color: #1A1B25;">
-        <div class="row align-items-center g-lg-5 py-5">
-            <div class="col-lg-7 text-center text-lg-start">
-                <h1 class="display-4 fw-bold lh-1" style="font-size: 8rem; color: #F7B32B;">Classy</h1>
-            <p class="col-lg-10 fs-4" style="color: #F2F4F3;">Optimiza tu vida estudiantil con nuestra plataforma: simplificación, organización y facilidad, ¡todo en un solo lugar!</p>
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+<title>{% block title %} Home {% endblock %}</title>
+{% include 'partials/_header.html' %}
+<section class="py-5 mt-5">
+    <div class="container py-4 py-xl-5">
+        <div class="row gy-4 gy-md-0">
+            <div class="col-md-6 text-center text-md-start d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center">
+                <div style="max-width: 350px;">
+                    <h1 class="display-6 fw-bold mb-4">Todo lo que un estudiante necesita en una sola&nbsp;<span class="underline">plataforma</span>.</h1>
+                    <p class="my-4">En Classy lo que más nos importa son los estudiantes, nuestro objetivo es hacer más sencilla tu educación gracias a nuestras apps.</p><a class="btn btn-dark btn-lg me-2" role="button" href="{% url 'login_page' %}">Login</a><a class="btn btn-light btn-lg" role="button" href="{% url 'signup_page' %}">Crear Cuenta</a>
+                </div>
             </div>
-            <div class="col-md-10 mx-auto col-lg-5 border rounded-3 bg-body-tertiary">
-                <form class="p-4 p-md-5" action="{% url 'login' %}" method="post">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <input type="text" class="form-control" placeholder="Usuario: " aria-label="Username" name="username" style="font-size: 1.25rem;">
-                    </div>
-                    <div class="mb-3">
-                        <input type="password" class="form-control" placeholder="Contraseña: " aria-label="Password" name="password" style="font-size: 1.25rem;">
-                    </div>
-                    <button class="w-100 btn btn-lg" style="background-color: #1A1B25; color: #F2F4F3;" type="submit">Iniciar sesión</button>
-                </form>
-                    <a class="link">¿Olvidaste tu contraseña?</a>
-                    <hr class="my-4">
-                    <small class="text-body-secondary">Si no tienes una cuenta, crea una ahora es gratis!.</small>
-                    <br/>
-                    <br/>
-                    <button type="button" class="w-100 btn btn-lg" style="background-color: #D7263D; color: #F2F4F3;" data-bs-toggle="modal" data-bs-target="#signUp">
-                        Crear cuenta
-                    </button>
-                    <div class="modal fade" id="signUp" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Crear cuenta</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                            <div class="modal-body">
-                                <form class="row g-3" action="{% url 'signup' %}" method="post">
-                                    {% csrf_token %}
-                                    <div class="col-md-6">
-                                        <label for="fname" class="form-label">Nombre</label>
-                                        <input type="text" class="form-control" id="fname" name="first_name" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="lname" class="form-label"> Apellido</label>
-                                        <input type="text" class="form-control" id="lname" name="last_name" required>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label for username class="form-label">Nombre de usuario</label>
-                                        <div class="input-group has-validation">
-                                            <span class="input-group-text">@</span>
-                                            <input type="text" class="form-control" id="username" name="username" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label for="email" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="email" name="email" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="password" class="form-label">Contraseña</label>
-                                        <input type="password" class="form-control" id="password" name="password1" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="val-password" class="form-label">Confirmar Contraseña</label>
-                                        <input type="password" class="form-control" id="val-password" name="password2" required>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-                                            <label class="form-check-label" for="invalidCheck">
-                                            Acepto los <a href="{% url 'terms' %}">Terminos y condiciones</a>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <small class="text-body-secondary">Al crear una cuenta protegemos toda tu información, disfruta nuestra plataforma! </small>
-                                    <small class="text-body-secondary">Al ingresar en tu cuenta podras personalizarla para mejorar tu experiencia como usuario!</small>
-                                    <div class="col-12">
-                                        <button class="w-100 btn btn-lg" style="background-color: #D7263D; color: #F2F4F3;"  type="submit">Registrarme</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    <br>
-                    <br>
+            <div class="col-md-6">
+                <div><img alt="index" class="rounded img-fluid w-100 fit-cover" style="min-height: 300px;" src="{% static 'imgs/study.svg' %}"></div>
             </div>
         </div>
-    {% if message %}
-    <div class="alert alert-warning" role="alert">
-        {{ message }}
     </div>
-    {% endif %}
-    </div>
-    {% include 'partials/_footer.html' %}
-    {% endblock %}
-</body>
-</html>
+    <section>
+        <div class="container py-4 py-xl-5">
+            <div class="row mb-5">
+                <div class="col-md-8 col-xl-6">
+                    <h3 class="display-6 fw-bold pb-4 mb-4">Herramientas gratuitas que te hacen más&nbsp;<span class="underline">productivo</span></h3>
+                </div>
+                <div class="col-md-8 col-xl-6 pt-4">
+                    <p class="text-muted">En Classy tenemos algunas herramientas que te harán sentir más productivo, ayudarte a organizarte es nuestro objetivo.&nbsp;</p>
+                </div>
+            </div>
+            <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+                <div class="col">
+                    <div class="card border-light border-1 d-flex justify-content-center p-4">
+                        <div class="card-body">
+                            <div>
+                                <div class="bs-icon-lg bs-icon-rounded bs-icon-secondary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-4 bs-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-time-duration-30">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M14 10.5v3a1.5 1.5 0 0 0 3 0v-3a1.5 1.5 0 0 0 -3 0z"></path>
+                                        <path d="M8 9h1.5a1.5 1.5 0 0 1 0 3h-.5h.5a1.5 1.5 0 0 1 0 3h-1.5"></path>
+                                        <path d="M3 12v.01"></path>
+                                        <path d="M7.5 4.2v.01"></path>
+                                        <path d="M7.5 19.8v.01"></path>
+                                        <path d="M4.2 16.5v.01"></path>
+                                        <path d="M4.2 7.5v.01"></path>
+                                        <path d="M12 21a9 9 0 0 0 0 -18"></path>
+                                    </svg></div>
+                                <h4 class="fw-bold">Pomodoro timer</h4>
+                                <p class="text-muted">El pomodoro timer es una herramienta que te permite gestionar tu tiempo para maximizar la productividad.&nbsp;</p><a class="fw-bold" href="#">Prueba ahora<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-arrow-narrow-right fs-3">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M5 12l14 0"></path>
+                                        <path d="M15 16l4 -4"></path>
+                                        <path d="M15 8l4 4"></path>
+                                    </svg></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-light border-1 d-flex justify-content-center p-4">
+                        <div class="card-body">
+                            <div>
+                                <div class="bs-icon-lg bs-icon-rounded bs-icon-secondary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-4 bs-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-cards">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M3.604 7.197l7.138 -3.109a.96 .96 0 0 1 1.27 .527l4.924 11.902a1 1 0 0 1 -.514 1.304l-7.137 3.109a.96 .96 0 0 1 -1.271 -.527l-4.924 -11.903a1 1 0 0 1 .514 -1.304z"></path>
+                                        <path d="M15 4h1a1 1 0 0 1 1 1v3.5"></path>
+                                        <path d="M20 6c.264 .112 .52 .217 .768 .315a1 1 0 0 1 .53 1.311l-2.298 5.374"></path>
+                                    </svg></div>
+                                <h4 class="fw-bold">Flashcards</h4>
+                                <p class="text-muted">Flashcards es una herramienta que te permite crear grupos de flashcards para maximizar tu estudio y asi saques las mejores calificaciones.&nbsp;</p><a class="fw-bold" href="#">Prueba ahora&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-arrow-narrow-right fs-3">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M5 12l14 0"></path>
+                                        <path d="M15 16l4 -4"></path>
+                                        <path d="M15 8l4 4"></path>
+                                    </svg></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border-light border-1 d-flex justify-content-center p-4">
+                        <div class="card-body">
+                            <div>
+                                <div class="bs-icon-lg bs-icon-rounded bs-icon-secondary d-flex flex-shrink-0 justify-content-center align-items-center d-inline-block mb-4 bs-icon"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-users-group">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
+                                        <path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1"></path>
+                                        <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
+                                        <path d="M17 10h2a2 2 0 0 1 2 2v1"></path>
+                                        <path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
+                                        <path d="M3 13v-1a2 2 0 0 1 2 -2h2"></path>
+                                    </svg></div>
+                                <h4 class="fw-bold">Comunidad</h4>
+                                <p class="text-muted">En nuestra comunidad podras crear post para compartir dudas y tu experiencia como estudiante.&nbsp;</p><a class="fw-bold" href="#">Prueba ahora&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-arrow-narrow-right fs-3">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                        <path d="M5 12l14 0"></path>
+                                        <path d="M15 16l4 -4"></path>
+                                        <path d="M15 8l4 4"></path>
+                                    </svg></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+{% include 'partials/_footer.html' %}
+{% endblock %}

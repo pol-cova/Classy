@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 import datetime
 import pytz
 
+# import user model
+from django.contrib.auth.models import User
 
 # import forms
 from .forms import SignUpForm, LoginForm, EditProfileForm, EditBioForm
@@ -84,6 +86,9 @@ def home(request):
     else:
         return render(request, 'index.html', {'message': 'Inicia sesión para continuar...'})
 
+# login page render
+def login_page(request):
+    return render(request, 'login.html')
 # user login
 def user_login(request):
     if request.method == 'POST':
@@ -101,9 +106,14 @@ def user_login(request):
                 profile, created = Profile.objects.get_or_create(user=user)
                 return redirect('home')
             else:
-                return render(request, 'index.html', {'message': 'Usuario o contraseña incorrectos'})
+                return render(request, 'login.html', {'message': 'Usuario o contraseña incorrectos, intenta de nuevo...'})
         else:
             return redirect('index')
+
+# user signup page
+def signup_page(request):
+    form = SignUpForm()
+    return render(request, 'signup.html', {'form': form})
 
 # user signup
 def user_signup(request):
@@ -112,9 +122,14 @@ def user_signup(request):
         if form.is_valid():
             # save user
             form.save()
-            return render(request, 'index.html', {'message': 'Usuario creado exitosamente'})
+            return redirect('login_page')
         else:
-            return redirect('index')
+            form = SignUpForm()
+            context = {
+                'form': form,
+                'message': 'Error al crear usuario, intenta de nuevo...'
+            }
+            return render(request, 'signup.html', context)
 
 # user logout
 def user_logout(request):
@@ -179,3 +194,7 @@ def delete_account(request):
         return redirect('index')
     else:
         return render(request, 'index.html', {'message': 'Inicia sesión para continuar...'})
+    
+# forgot password
+def forgot_password(request):
+    return render(request, 'forgot-password.html')

@@ -23,7 +23,7 @@ def admin_dash(request, token):
 
 # terms and conditions
 def terms(request):
-    return render(request, 'terms.html')
+    return render(request, 'conditions.html')
 
 # about
 def about(request):
