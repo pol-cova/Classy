@@ -83,3 +83,6 @@ def delete_ticket(request, ticket_id):
     ticket = get_object_or_404(Ticket, id=ticket_id)
     ticket.delete()
     return redirect('admin_dash', 'admin')
+
+def custom_404(request, exception):
+    return render(request, '404.html', status=404)

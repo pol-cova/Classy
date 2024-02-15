@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Pagina no encontrada{% endblock %}
+{% block content %}
+{% load static %}
+{% include 'partials/_header.html' %}
+<section class="py-5 mt-5">
+    <div class="container">
+        <div class="row row-cols-1 d-flex justify-content-center align-items-center">
+            <div class="col-md-10 text-center"><img alt="404" class="img-fluid w-100" src="{% static 'imgs/error_404.svg' %}"></div>
+            <div class="col text-center">
+                <h2 class="display-3 fw-bold mb-4">Pagina no encontrada</h2>
+                <p class="fs-4 text-muted">La pagina que estas buscando no se encuentra aqui, lo lamentamos. <a href="/">Pagina principal</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+{% include 'partials/_footer.html' %}
+{% endblock %}

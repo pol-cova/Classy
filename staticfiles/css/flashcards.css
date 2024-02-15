@@ -1,0 +1,9 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #1a1b25;
+    margin: 0;
+    font-family: 'Inconsolata', monospace;
+}

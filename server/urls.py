@@ -16,6 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include  # new
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,4 +30,7 @@ urlpatterns = [
     path('notes/', include('notes.urls')),
     path('support/', include('support.urls')),
     path('flashcards/', include('flashcards.urls')),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# 404 handler
+handler404 = 'support.views.custom_404'
