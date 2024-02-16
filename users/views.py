@@ -216,6 +216,3 @@ def delete_account(request):
     else:
         return render(request, 'index.html', {'message': 'Inicia sesión para continuar...'})
     
-# forgot password
-def forgot_password(request):
-    return render(request, 'forgot-password.html')
