@@ -5,6 +5,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 import datetime
 import pytz
+# Mail settings
+from django.core.mail import EmailMultiAlternatives
+from django.conf import settings
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 # import user model
 from django.contrib.auth.models import User
@@ -120,8 +125,24 @@ def user_signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
+            email = form.cleaned_data['email']
+            username = form.cleaned_data['username']
             # save user
             form.save()
+            # send an email to complete profile
+            context = {
+                'message': "Hola @" + username + "! Gracias por registrarte en Classy"
+            }
+
+            html_message = render_to_string('email.html', context=context)
+            plain_message = strip_tags(html_message)
+            subject = "noreply: Classy | Completa tu perfil ahora"
+            body = plain_message
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [email]
+            msg = EmailMultiAlternatives(subject, body, email_from, recipient_list)
+            msg.attach_alternative(html_message, "text/html")
+            msg.send()
             return redirect('login_page')
         else:
             form = SignUpForm()

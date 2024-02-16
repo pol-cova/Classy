@@ -1,13 +1,36 @@
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth import authenticate
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Ticket
 from .forms import TicketForm
 from django.contrib.auth.models import User
 from social.models import Post, Comment
+import os
 # Mail settings
 from django.core.mail import send_mail
 from django.conf import settings
+
+# admin login page
+def admin_login(request):
+    return render(request, 'admin_login.html')
+
+# admin auth method
+def admin_auth(request):
+    if request.method == 'POST':
+        mail = request.POST['mail']
+        password = request.POST['password']
+        SUPPORT_MAIL = os.getenv('SUPPORT_MAIL')
+        SUPPORT_PASSWORD = os.getenv('SUPPORT_PASSWORD')
+        user = authenticate(username=SUPPORT_MAIL, password=SUPPORT_PASSWORD)
+        if user is not None:
+            return 'Success'
+        else:
+            return 'Fail'
+    else:
+        return redirect('admin_login')
+
 # admin dash
+@login_required
 def admin_dash(request, token):
     if token == 'admin':
         context = {
@@ -29,19 +52,14 @@ def terms(request):
 def about(request):
     return render(request, 'about.html')
 
-def support_home(request):
-    context = {
-        'form': TicketForm()
-    }
-    return render(request, 'support.html', context)
-
+# contact
 def contact(request):
     context = {
         'form': TicketForm()
     }
     return render(request, 'contact.html', context)
 
-def support_save(request):
+def save_ticket(request):
     if request.method == 'POST':
         form = TicketForm(request.POST)
         if form.is_valid():
@@ -68,10 +86,11 @@ def support_save(request):
             }
             return render(request, 'support.html', context)
     else:
-        return support_home(request)
+        return contact(request)
     
 
 # complete tickets
+@login_required
 def complet_ticket(request, ticket_id):
     ticket = get_object_or_404(Ticket, id=ticket_id)
     ticket.status = True
@@ -79,6 +98,7 @@ def complet_ticket(request, ticket_id):
     return redirect('admin_dash', 'admin')
 
 # delete tickets
+@login_required
 def delete_ticket(request, ticket_id):
     ticket = get_object_or_404(Ticket, id=ticket_id)
     ticket.delete()
