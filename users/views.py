@@ -31,6 +31,8 @@ from remainders.models import Remainder
 # import from notes
 from notes.models import Note
 
+# import from social
+from social.models import Post
 
 # index 
 def index(request):
@@ -66,7 +68,8 @@ def home(request):
         day = today.weekday()
         # get day name
         day_name = today.strftime("%A")
-
+        #post count 
+        post_count = Post.objects.filter(user=user).count()
         # days dict key:value -> day_name: spanish_name
         DAYS = {
             'Monday': 'Lunes',
@@ -86,6 +89,7 @@ def home(request):
             'subjects': subjects,
             'today': DAYS[day_name],
             'notes_count': notes_count,
+            'post_count' : post_count,
         }
         return render(request, 'home.html', context)
     else:
