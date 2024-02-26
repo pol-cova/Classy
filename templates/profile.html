@@ -23,6 +23,9 @@
                     <p class="card-text">{{ user.profile.bio }}</p>
                     <p class=" small card-text">Cumpleaños: {{ user.profile.birth_date }} 🥳</p>
                     <p class=" card-text" style="font-weight: bold;">Carrera: {{ user.profile.career }}</p>
+                    {% if user.profile.is_cuvalles %}
+                    <p class=" card-text text-success" style="font-weight: bold;">Estudiante del CUValles</p>
+                    {% endif %}
                     {% else %}
                     <div class="alert alert-warning" role="alert">
                         Aún no completas tu perfil, puedes hacerlo ahora o en otro momento!
@@ -79,6 +82,14 @@
                                         <label for="career" class="form-label">Carrera</label>
                                         <input type="text" class="form-control" id="career" name="career" placeholder="{{user.profile.career}}">
                                     </div>
+                                    <div class="col-md-12">
+                                        <!--checkbok for is_cuvalles -->
+                                        <div class="form-check form-switch">
+                                            <input class="form-check form-switch" type="checkbox" id="is_cuvalles" name="is_cuvalles">
+                                            <label class="form-check
+                                            form-switch" for="is_cuvalles">Estudiante del CUValles</label>
+                                    </div>
+
                                     <input type="hidden" name="profile_complete" value="1">
                                     <small class="text-body-secondary">Recuerda que despues de completar tu perfil solo prodras cambiar la biografia!</small>                                    
                                     <div class="col-12">
@@ -89,7 +100,28 @@
                 </div>
                 </div>
             </div>
-            <a href="{% url 'delete_account' %}" class="btn btn-danger">Eliminar cuenta</a>
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAc">Eliminar cuenta</button>
+            <div class="modal fade" id="deleteAc" tabindex="-1" aria-labelledby="deleteAcLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="deleteAcLabel">Eliminar cuenta</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    <div class="modal-body
+                    ">
+                    <form class="row g-3" action="{% url 'delete_account' %}" method="post">
+                        {% csrf_token %}
+                        <div class="col-12">
+                            <p>¿Estas seguro que quieres eliminar tu cuenta?</p>
+                            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cerrar</button>
+                            <button class="w-100 btn btn-lg" style="background-color: #D7263D; color: #F2F4F3;"  type="submit">Eliminar cuenta</button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+                </div>
+            </div>
         </div>
         {% endif %}
         {% if user.profile.profile_complete %}
@@ -120,7 +152,28 @@
                 </div>
                 </div>
             </div>
-            <a href="{% url 'delete_account' %}" class="btn btn-danger">Eliminar cuenta</a>
+            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAc">Eliminar cuenta</button>
+            <div class="modal fade" id="deleteAc" tabindex="-1" aria-labelledby="deleteAcLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="deleteAcLabel">Eliminar cuenta</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    <div class="modal-body
+                    ">
+                    <form class="row g-3" action="{% url 'delete_account' %}" method="post">
+                        {% csrf_token %}
+                        <div class="col-12">
+                            <p>¿Estas seguro que quieres eliminar tu cuenta?</p>
+                            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cerrar</button>
+                            <button class="w-100 btn btn-lg" style="background-color: #D7263D; color: #F2F4F3;"  type="submit">Eliminar cuenta</button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+                </div>
+            </div>
         </div>
         {% endif %}
     </div>

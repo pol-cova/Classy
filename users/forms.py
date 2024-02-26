@@ -19,7 +19,7 @@ class LoginForm(forms.Form):
 class EditProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('bio', 'birth_date', 'pronouns', 'career', 'profile_complete')
+        fields = ('bio', 'birth_date', 'pronouns', 'career','is_cuvalles', 'profile_complete')
 
 class EditBioForm(forms.ModelForm):
     class Meta:

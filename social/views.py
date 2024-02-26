@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import PostForm, CommentForm
 from django.db.models import Count
 # home social page
-@login_required
+@login_required(login_url='/login')
 def social_home(request):
     posts = Post.objects.annotate(comment_count=Count('comment')).order_by('-created')
     # get comments for each post
@@ -21,7 +21,7 @@ def social_home(request):
     return render(request, 'social.html', context)
 
 # create post
-@login_required
+@login_required(login_url='/login')
 def create_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
@@ -38,7 +38,7 @@ def create_post(request):
     return redirect('social_home')
 
 # like post
-@login_required
+@login_required(login_url='/login')
 def like_post(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     if request.user in post.likes.all() or request.user in post.dislikes.all():
@@ -49,7 +49,7 @@ def like_post(request, post_id):
     return redirect('social_home')
 
 # dislike post
-@login_required
+@login_required(login_url='/login')
 def dislike_post(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     if request.user in post.likes.all():
@@ -59,7 +59,7 @@ def dislike_post(request, post_id):
     return redirect('social_home')
 
 # create comment
-@login_required
+@login_required(login_url='/login')
 def create_comment(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     if request.method == 'POST':
@@ -79,7 +79,7 @@ def create_comment(request, post_id):
     return redirect('details', post_id=comment.post.id)
 
 # like comment
-@login_required
+@login_required(login_url='/login')
 def like_comment(request, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
     if request.user in comment.likes.all() or request.user in comment.dislikes.all():
@@ -90,7 +90,7 @@ def like_comment(request, comment_id):
     return redirect('details', post_id=comment.post.id)
 
 # dislike comment
-@login_required
+@login_required(login_url='/login')
 def dislike_comment(request, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
     if request.user in comment.likes.all():
@@ -100,7 +100,7 @@ def dislike_comment(request, comment_id):
     return redirect('details', post_id=comment.post.id)
 
 # post detail
-@login_required
+@login_required(login_url='/login')
 def post_detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     comments = Comment.objects.filter(post=post).order_by('-created')

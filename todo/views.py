@@ -4,7 +4,7 @@ from .models import Task, Group
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
-@login_required
+@login_required(login_url='/login')
 def todo(request):
     # Form for add a new task
     form_task = AddTaskForm()
@@ -31,7 +31,7 @@ def todo(request):
     return render(request, 'todo.html', context)
 
 # create a new task
-@login_required
+@login_required(login_url='/login')
 def add_task(request):
     if request.method == 'POST':
         form = AddTaskForm(request.POST)
@@ -43,7 +43,7 @@ def add_task(request):
             return redirect('todo')
     return redirect('todo')
 
-@login_required
+@login_required(login_url='/login')
 def new_task(request):
     if request.method == 'POST':
         form = AddTaskForm(request.POST)
@@ -57,7 +57,7 @@ def new_task(request):
 
 
 # create a new group
-@login_required
+@login_required(login_url='/login')
 def add_group(request):
     if request.method == 'POST':
         form = AddGroupForm(request.POST)
@@ -70,7 +70,7 @@ def add_group(request):
     return redirect('todo')
 
 # edit a task
-@login_required
+@login_required(login_url='/login')
 def edit_task(request, task_id):
     taks = get_object_or_404(Task, id=task_id, user=request.user)
     if request.method == 'POST':
@@ -81,14 +81,14 @@ def edit_task(request, task_id):
     return redirect('todo')
 
 # delete a task
-@login_required
+@login_required(login_url='/login')
 def delete_task(request, task_id):
     taks = get_object_or_404(Task, id=task_id, user=request.user)
     taks.delete()
     return redirect('todo')
 
 # complete a task
-@login_required
+@login_required(login_url='/login')
 def complete_task(request, task_id):
     taks = get_object_or_404(Task, id=task_id, user=request.user)
     taks.completed = True
@@ -97,7 +97,7 @@ def complete_task(request, task_id):
 
 
 # decomplete a task
-@login_required
+@login_required(login_url='/login')
 def decomplete_task(request, task_id):
     taks = get_object_or_404(Task, id=task_id, user=request.user)
     taks.completed = False
@@ -105,7 +105,7 @@ def decomplete_task(request, task_id):
     return redirect('todo')
 
 # filter tasks by group
-@login_required
+@login_required(login_url='/login')
 def filter_group(request, group_id):
     # Form for add a new task
     form_task = AddTaskForm()

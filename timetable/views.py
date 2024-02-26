@@ -4,7 +4,7 @@ from .models import Subject
 from .forms import SubjectForm
 
 # Create your views here.
-@login_required
+@login_required(login_url='/login')
 def timetable(request):
     add_subject_form = SubjectForm()
     # Chek if user has subjects
@@ -25,7 +25,7 @@ def timetable(request):
     return render(request, 'timetable.html', context)
 
 # Create subject
-@login_required
+@login_required(login_url='/login')
 def add_subject(request):
     if request.method == "POST":
         form = SubjectForm(request.POST)
@@ -39,7 +39,7 @@ def add_subject(request):
     return redirect('timetable')
 
 # Delete subject
-@login_required
+@login_required(login_url='/login')
 def delete_subject(request, pk):
     subject = Subject.objects.get(id=pk)
     subject.delete()

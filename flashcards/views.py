@@ -3,7 +3,7 @@ from .forms import CardGroupForm, CardForm
 from .models import CardGroup, Card
 from django.contrib.auth.decorators import login_required
 # Renders  
-@login_required
+@login_required(login_url='/login')
 def index(request):
     # get users card groups
     card_groups = CardGroup.objects.filter(user=request.user)
@@ -13,7 +13,7 @@ def index(request):
     }
     return render(request, 'flash.html', context)
 
-@login_required
+@login_required(login_url='/login')
 # Flash cards view
 def flash_cards(request, card_group_id):
     # get card group
@@ -29,7 +29,7 @@ def flash_cards(request, card_group_id):
 
 # Logic section
 # Create a new card group
-@login_required
+@login_required(login_url='/login')
 def create_card_group(request):
     if request.method == 'POST':
         form = CardGroupForm(request.POST)
@@ -38,7 +38,7 @@ def create_card_group(request):
             form.save()
     return redirect('flash')
 
-@login_required
+@login_required(login_url='/login')
 def create_card(request, card_group_id):
     if request.method == 'POST':
         form = CardForm(request.POST)
@@ -50,7 +50,7 @@ def create_card(request, card_group_id):
     return redirect('flash-cards', card_group_id=card_group_id)
 
 # Delete all cards in a card group
-@login_required
+@login_required(login_url='/login')
 def delete_cards(request, card_group_id):
     Card.objects.filter(card_group=card_group_id).delete()
     return redirect('flash-cards', card_group_id=card_group_id)

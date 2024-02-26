@@ -16,6 +16,8 @@ class Profile(models.Model):
     birth_date = models.DateField(null=True, blank=True)
     pronouns = models.CharField(max_length=5, choices=PRONOUNS, blank=True)
     career = models.CharField(max_length=100, blank=True)
+    # check if user is student from cuvalles
+    is_cuvalles = models.BooleanField(default=False)
     #profile_picture = models.ImageField(upload_to='profile_pictures', blank=True)
     # check if profile is complete in a bool
     profile_complete = models.BooleanField(default=False)

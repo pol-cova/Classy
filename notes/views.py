@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from timetable.models import Subject
 
 # Create your views here.
-@login_required
+@login_required(login_url='/login')
 def notes(request):
     form = NoteForm()
     # get user subjects
@@ -20,7 +20,7 @@ def notes(request):
     return render(request, 'notes.html', context)
 
 # add_note
-@login_required
+@login_required(login_url='/login')
 def add_note (request):
     if request.method != 'POST':
         # no data submitted; create a blank form
@@ -39,7 +39,7 @@ def add_note (request):
     return render(request, 'note.html', context)
 
 # edit_note
-@login_required
+@login_required(login_url='/login')
 def edit_note (request, note_id):
     note = Note.objects.get(id=note_id)
     if request.method != 'POST':
@@ -55,7 +55,7 @@ def edit_note (request, note_id):
     return render(request, 'edit_note.html', context)
 
 # delete_note
-@login_required
+@login_required(login_url='/login')
 def delete_note (request, note_id):
     note = Note.objects.get(id=note_id)
     note.delete()

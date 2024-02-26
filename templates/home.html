@@ -1,132 +1,189 @@
 {% extends '_home_base.html' %}
+{% load static %}
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-6"> 
-            <div class="card w-100"> 
-                <div class="card-body">
-                    <h5 class="card-title">Tareas pendientes 
-                        <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#createTask" ><span class="material-symbols-outlined">
-                            add
-                            </span>
-                        </span></button>
-                        <div class="modal fade" id="createTask" tabindex="-1" aria-labelledby="createTaskLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="createTaskLabel">Crear tareas</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                <form action="{% url 'new_task' %} " method="post">
-                                {% csrf_token %}
-                                {{form_task}}
-                                </div>
-                                <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-success">Agregar tarea</button>
-                                </div>
-                            </form>
-                            </div>
-                            </div>
+<nav class="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light" style="border-radius: 10px;">
+    <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
+        <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group"></div>
+            <h4 style="color: #1a1b25;">Bienvenid@ de vuelta {{user}}</h4>
+        </form>
+        <ul class="navbar-nav flex-nowrap ms-auto">
+            <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><i class="fas fa-search"></i></a>
+                <div class="dropdown-menu dropdown-menu-end p-3 animated--grow-in" aria-labelledby="searchDropdown">
+                    <form class="me-auto navbar-search w-100">
+                        <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ...">
+                            <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
                         </div>
-                    </h5>
-            <ul class="list-group list-group-flush">
-                {% for task in tasks %}
-                {% if task.completed == False %}
-                <li class="list-group-item">
-                    <div class="d-flex justify-content-between">
-                        <div class="d-flex align-items-center gap-2">
-                            <form action="{% url 'complete_task' task.id %}" method="post">
-                                {% csrf_token %}
-                            <button type="submit" class="btn">                            
-                                <span class="material-symbols-outlined">
-                                check_box_outline_blank
-                            </span></button>
-                            </form>
-                            <span>{{task.title}}</span>
-                        </div>
+                    </form>
+                </div>
+            </li>
+            <div class="d-none d-sm-block topbar-divider"></div>
+            <li class="nav-item dropdown no-arrow">
+                <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small">{{user}}</span><img class="border rounded-circle img-profile" src="{% static 'imgs/default_avatar.png' %}"></a>
+                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in"><a class="dropdown-item" href="#"><i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Perfil</a><a class="dropdown-item" href="#"><i class="fas fa-headset fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Obtener Ayuda</a>
+                        <div class="dropdown-divider"></div><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Salir</a>
                     </div>
-                </li>
-                {% endif %}
-                {% endfor %}
-            </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="d-sm-flex justify-content-between align-items-center mb-4">
+        <h3 class="text-dark mb-0">{{user}}'s home</h3>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card shadow border-start-primary py-2" style="border-radius: 15px;">
+                <div class="card-body">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col me-2">
+                            <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>Tareas pendientes</span></div>
+                            <div class="text-dark fw-bold h5 mb-0"><span>tasks</span></div>
+                        </div>
+                        <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card w-100" style="background-color: #6C6EA0;"> 
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card shadow border-start-success py-2" style="border-radius: 15px;">
                 <div class="card-body">
-                    <h5 class="card-title" style="font-size: 3em; color: #F2F4F5;"> {{tasks_count}}</h5>
-                    <p class="card-text" style="font-size: 1.25em; color: #F2F4F5;">Tareas pendientes</p>
+                    <div class="row align-items-center no-gutters">
+                        <div class="col me-2">
+                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Recordatorios</span></div>
+                            <div class="text-dark fw-bold h5 mb-0"><span>remainder</span></div>
+                        </div>
+                        <div class="col-auto"><i class="fas fa-bell fa-2x text-gray-300"></i></div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card w-100" style="background-color: #F7B32B;">
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card shadow border-start-info py-2" style="border-radius: 15px;">
                 <div class="card-body">
-                    <h5 class="card-title" style="font-size: 3em; color: #F2F4F5;">{{remainders_count}}</h5>
-                    <p class="card-text" style="font-size: 1.25em; color: #F2F4F5;">Recordatorios</p>
+                    <div class="row align-items-center no-gutters">
+                        <div class="col me-2">
+                            <div class="text-uppercase text-info fw-bold text-xs mb-1"><span>TAREAS COMPLETADAS</span></div>
+                            <div class="row g-0 align-items-center">
+                                <div class="col-auto">
+                                    <div class="text-dark fw-bold h5 mb-0 me-3"><span>task</span></div>
+                                </div>
+                                <div class="col">
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-info" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;"><span class="visually-hidden">50%</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto"><i class="fas fa-tasks fa-2x text-gray-300"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3 mb-4">
+            <div class="card shadow border-start-warning py-2" style="border-radius: 15px;">
+                <div class="card-body">
+                    <div class="row align-items-center no-gutters">
+                        <div class="col me-2">
+                            <div class="text-uppercase text-warning fw-bold text-xs mb-1"><span>Post publicados</span></div>
+                            <div class="text-dark fw-bold h5 mb-0"><span>post</span></div>
+                        </div>
+                        <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <br>
     <div class="row">
-        <div class="col-md-9">
-            <div class="card w-100">
-                <h5 class="card-header">Clases de hoy <span class="badge bg-warning">{{ today }}</span></h5>
+        <div class="col-lg-7 col-xl-8">
+            <div class="card shadow mb-4" style="border-radius: 15px;">
+                <div class="card-header d-flex justify-content-between align-items-center" style="border-radius: 10px;">
+                    <h6 class="text-primary fw-bold m-0" style="color: #1a1b25;">Horario de clases</h6>
+                </div>
                 <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Materia</th>
-                                <th>Salon</th>
-                                <th>Horario</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for subject in subjects|dictsort:"hour_start" %}
-                                {% if subject.get_day == today %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
                                 <tr>
-                                    <td>{{ subject.name }}</td>
-                                    <td>{{ subject.clasroom }}</td>
-                                    <td>{{ subject.hour_start|time:"H:i" }} - {{ subject.hour_end|time:"H:i" }}</td>
+                                    <th>Column 1</th>
+                                    <th>Column 2</th>
                                 </tr>
-                                {% endif %}
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Cell 1</td>
+                                    <td>Cell 2</td>
+                                </tr>
+                                <tr>
+                                    <td>Cell 3</td>
+                                    <td>Cell 4</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-        <style>
-            #btn{
-                background-color: #D7263D;
-                color: #F2F4F5;
-                font-size: 1.5em;
-                padding: 1em;
-                border-radius: 0.5em;
-                text-decoration: none;
-            }
-        </style>
-        <div class="col-md-3">
-            <div class="card w-100">
-                <a id="btn" href="{% url 'studyTimer' %}">Tiempo de estudiar</a>
+        <div class="col">
+            <div class="card shadow mb-4" style="border-radius: 15px;">
+                <div class="card-header py-3" style="border-radius: 10px;">
+                    <h6 class="text-primary fw-bold m-0">Tareas pendientes</h6>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="row align-items-center no-gutters">
+                            <div class="col me-2">
+                                <h6 class="mb-0"><strong>Lunch meeting</strong></h6><span class="text-xs">10:30 AM</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1"></label></div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row align-items-center no-gutters">
+                            <div class="col me-2">
+                                <h6 class="mb-0"><strong>Lunch meeting</strong></h6><span class="text-xs">11:30 AM</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-2"><label class="form-check-label" for="formCheck-2"></label></div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="row align-items-center no-gutters">
+                            <div class="col me-2">
+                                <h6 class="mb-0"><strong>Lunch meeting</strong></h6><span class="text-xs">12:30 AM</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-3"><label class="form-check-label" for="formCheck-3"></label></div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card w-100" style="background-color: #1A1B25;">
+        <div class="col-lg-6 col-xl-8 mb-4">
+            <div class="card shadow mb-4"></div>
+            <div class="card shadow mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h6 class="text-primary fw-bold m-0">Ultimos posts de la comunidad</h6>
+                </div>
+                <div class="card-body"></div>
+            </div>
+        </div>
+        <div class="col-lg-5 col-xl-4">
+            <div class="card shadow mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h6 class="text-primary fw-bold m-0">Sentimientos hoy</h6>
+                </div>
                 <div class="card-body">
-                    <h5 class="card-title" style="font-size: 3em; color: #F2F4F5;">{{notes_count}}</h5>
-                    <p class="card-text" style="font-size: 1.25em; color: #F2F4F5;">Recordatorios</p>
+                    <div class="text-center small mt-4"><span class="me-2"><i class="fas fa-circle text-primary"></i>&nbsp;Direct</span><span class="me-2"><i class="fas fa-circle text-success"></i>&nbsp;Social</span><span class="me-2"><i class="fas fa-circle text-info"></i>&nbsp;Refferal</span></div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row"></div>
 </div>
-
 {% endblock %}
