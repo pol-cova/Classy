@@ -3,6 +3,7 @@ from .forms import AddTaskForm, EditTaskForm, AddGroupForm
 from .models import Task, Group
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 
 @login_required(login_url='/login')
 def todo(request):
@@ -131,3 +132,12 @@ def filter_group(request, group_id):
     }
 
     return render(request, 'todo.html', context)
+
+# Check task with cors
+# @login_required(login_url='/login')
+def check_task(request, task_id):
+    response = {
+        'status': 'ok',
+        'task_id': task_id
+    }
+    return JsonResponse(response)

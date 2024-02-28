@@ -6,10 +6,11 @@ class AddTaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['title', 'description','group', 'limit_date']
+        labels = {'title': 'Titulo', 'description': 'Descripcion', 'group': 'Grupo', 'limit_date': 'Fecha limite'}
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Titulo'}),
             'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Descripcion'}),
-            'group': forms.Select(attrs={'class': 'form-control'}),
+            'group': forms.Select(attrs={'class': 'form-control', 'label': 'Grupo'}),
             'limit_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
         }
 
