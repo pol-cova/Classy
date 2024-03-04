@@ -54,7 +54,7 @@ def new_task(request):
             task.user = request.user
             task.save()
             return redirect('home')
-    return redirect('todo')
+    return redirect('home')
 
 
 # create a new group
@@ -96,6 +96,14 @@ def complete_task(request, task_id):
     taks.save()
     return redirect('home')
 
+# check task
+@login_required(login_url='/login')
+def check_task(request, task_id):
+    taks = get_object_or_404(Task, id=task_id, user=request.user)
+    taks.completed = True
+    taks.save()
+    return redirect('todo')
+
 
 # decomplete a task
 @login_required(login_url='/login')
@@ -132,12 +140,3 @@ def filter_group(request, group_id):
     }
 
     return render(request, 'todo.html', context)
-
-# Check task with cors
-# @login_required(login_url='/login')
-def check_task(request, task_id):
-    response = {
-        'status': 'ok',
-        'task_id': task_id
-    }
-    return JsonResponse(response)

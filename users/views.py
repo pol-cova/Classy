@@ -50,14 +50,17 @@ def home(request):
         return redirect('support_tickets')
     elif request.user.is_authenticated:
         user = request.user
-        tasks = Task.objects.filter(user=user)
+        tasks = Task.objects.filter(user=user, completed=False)[:3]
+        # count all task by user
+        task_count = Task.objects.filter(user=user).count()
         # count not completed for user
-        tasks_count = Task.objects.filter(user=user, completed=False).count()
+        incomplete_tasks = Task.objects.filter(user=user, completed=False).count()
+        # count completed tasks for user
+        completed_tasks = Task.objects.filter(user=user, completed=True).count()
         # count not completed remainders
         remainders_count = Remainder.objects.filter(user=user, is_completed=False).count()
         form_task = AddTaskForm()
-        # get user subjects
-        subjects = Subject.objects.filter(user=user)
+        
         # get user notes
         notes_count = Note.objects.filter(owner=user).count()
         # timezone
@@ -68,8 +71,13 @@ def home(request):
         day = today.weekday()
         # get day name
         day_name = today.strftime("%A")
+        
         #post count 
         post_count = Post.objects.filter(user=user).count()
+
+        # get latest post
+        posts = Post.objects.filter(user=user).order_by('-created')[:3]
+
         # days dict key:value -> day_name: spanish_name
         DAYS = {
             'Monday': 'Lunes',
@@ -80,16 +88,32 @@ def home(request):
             'Saturday': 'Sabado',
             'Sunday': 'Domingo',
         }
+        #
+        today = DAYS[day_name]
+        # get user subjects
+        subjects = Subject.objects.filter(user=user, day=day_name)
+
+        # user percetange complete tasks
+        if task_count > 0:
+            percentage = (completed_tasks / task_count) * 100
+            percentage = int(percentage)
+        else:
+            percentage = 0
+
         context = {
             'user': user,
             'tasks': tasks,
             'remainders_count': remainders_count,
-            'tasks_count': tasks_count,
+            'incomplete_tasks': incomplete_tasks,
             'form_task': form_task,
             'subjects': subjects,
-            'today': DAYS[day_name],
+            'today': today,
             'notes_count': notes_count,
             'post_count' : post_count,
+            'completed_tasks': completed_tasks,
+            'task_count': task_count,
+            'percentage': percentage,
+            'posts': posts,
         }
         return render(request, 'home.html', context)
     else:

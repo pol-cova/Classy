@@ -78,7 +78,7 @@
                 <li class="list-group-item">
                     <div class="d-flex justify-content-between">
                         <div class="d-flex align-items-center gap-2">
-                            <form action="{% url 'complete_task' task.id %}" method="post">
+                            <form action="{% url 'check_task' task.id %}" method="post">
                                 {% csrf_token %}
                             <button type="submit" class="btn">                            
                                 <span class="material-symbols-outlined">
