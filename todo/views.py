@@ -67,7 +67,7 @@ def add_group(request):
             group = form.save(commit=False)
             group.user = request.user
             group.save()
-            return redirect('home')
+            return redirect('todo')
     return redirect('todo')
 
 # edit a task

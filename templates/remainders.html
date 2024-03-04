@@ -1,14 +1,13 @@
 {% extends '_home_base.html' %}
 {% block content %}
+<div class="container-fluid">
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h4">Mis recordatorios: </h1>
     <div class="btn-toolbar mb-2 mb-md-0">
         <div class="btn-group me-2">
         <div>
-            <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#addRemainder" ><span class="material-symbols-outlined">
-                add
-                </span>
-            </span>Crear Recordatorio</button>
+            <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#addRemainder" >
+                <i class="far fa-plus"></i> Crear Recordatorio</button>
             <div class="modal fade" id="addRemainder" tabindex="-1" aria-labelledby="addRemainderLabel" aria-hidden="true">
                 <div class="modal-dialog">
                 <div class="modal-content">
@@ -172,5 +171,6 @@
             </ul>
         </div>
     </div>
+</div>
 </div>
 {% endblock %}

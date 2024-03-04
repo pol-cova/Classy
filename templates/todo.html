@@ -1,15 +1,16 @@
 {% extends '_home_base.html' %}
 {% block content %}
-{% block link %}<a class="nav-link active"></a>{%endblock%}
+<div class="container-fluid">
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h4">Mis tareas: </h1>
+    <div class="d-sm-flex justify-content-between align-items-center mb-4">
+        <h3 class="text-dark mb-0">Mis tareas</h3>
+    </div>
     <div class="btn-toolbar mb-2 mb-md-0">
         <div class="btn-group me-2">
         <div>
-            <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#createTask" ><span class="material-symbols-outlined">
-                add
-                </span>
-            </span>Crear Tareas</button>
+            <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#createTask" >
+                <i class="far fa-plus"></i>
+                Crear Tareas</button>
             <div class="modal fade" id="createTask" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                 <div class="modal-content">
@@ -23,7 +24,7 @@
                     {{form_task}}
                     </div>
                     <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-success">Agregar tarea</button>
                     </div>
                 </form>
@@ -32,10 +33,9 @@
             </div>
         </div>
         <div>
-            <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#createGroup" ><span class="material-symbols-outlined">
-                ad_group 
-                </span>
-            </span>Crear Grupo</button>
+            <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal" data-bs-target="#createGroup" >
+                <i class="far fa-plus"></i>
+                Crear Grupo</button>
             <div class="modal fade" id="createGroup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                 <div class="modal-content">
@@ -49,7 +49,7 @@
                     {{form_group}}
                     </div>
                     <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-dark">Crear Grupo</button>
                     </div>
                 </form>
@@ -58,7 +58,7 @@
             </div>
         </div>
         <div>
-            <a class="btn btn-sm btn-warning dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><span class="material-symbols-outlined">filter_alt</span> Filtrar</a>
+            <a class="btn btn-sm btn-warning dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="far fa-filter"></i> Filtrar</a>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{% url 'todo' %}">Todas</a></li>
                 {% for group in groups %}
@@ -81,17 +81,15 @@
                             <form action="{% url 'check_task' task.id %}" method="post">
                                 {% csrf_token %}
                             <button type="submit" class="btn">                            
-                                <span class="material-symbols-outlined">
-                                check_box_outline_blank
-                            </span></button>
+                                <i class="far fa-square"></i></button>
                             </form>
                             <span>{{task.title}}</span>
                         </div>
                         <div class="d-flex align-items-center gap-2">
                             <div>
-                            <button type="button" class="btn"  data-bs-toggle="modal" data-bs-target="#taskDetails"><span class="material-symbols-outlined">
-                                visibility
-                            </span></button>
+                            <button type="button" class="btn"  data-bs-toggle="modal" data-bs-target="#taskDetails">
+                                <i class="far fa-eye-slash"></i>
+                            </button>
                             <div class="modal fade" id="taskDetails" tabindex="-1" aria-labelledby="taskDetails" aria-hidden="true">
                                 <div class="modal-dialog">
                                 <div class="modal-content">
@@ -107,9 +105,9 @@
                             </div>
                             </div>
                             <div>
-                                <button type="button" class="btn"  data-bs-toggle="modal" data-bs-target="#editTask"><span class="material-symbols-outlined">
-                                    edit
-                                </span></button>
+                                <button type="button" class="btn"  data-bs-toggle="modal" data-bs-target="#editTask">
+                                    <i class="far fa-edit"></i>
+                                </button>
                                 <div class="modal fade" id="editTask" tabindex="-1" aria-labelledby="editTask" aria-hidden="true">
                                     <div class="modal-dialog">
                                     <div class="modal-content">
@@ -140,9 +138,9 @@
                             <div>
                                 <form action="{% url 'delete_task' task.id %}" method="post">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger"><span class="material-symbols-outlined">
-                                        delete
-                                    </span></button>
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="far fa-trash-alt"></i>
+                                    </button>
                                 </form>
                             </div>
                         </div>
@@ -166,18 +164,16 @@
                             <form action="{% url 'incomplete_task' task.id %}" method="post">
                                 {% csrf_token %}
                             <button type="submit" class="btn">
-                            <span class="material-symbols-outlined">
-                                check_box
-                            </span>
+                            <i class="far fa-check-square"></i>
                             </button>
                             </form>
                             <span>{{task.title}}</span>
                         </div>
                         <div class="d-flex align-items-center gap-2">
                             <div>
-                            <button type="button" class="btn"  data-bs-toggle="modal" data-bs-target="#taskDetails"><span class="material-symbols-outlined">
-                                visibility
-                            </span></button>
+                            <button type="button" class="btn"  data-bs-toggle="modal" data-bs-target="#taskDetails">
+                                <i class="far fa-eye-slash"></i>
+                            </button>
                             <div class="modal fade" id="taskDetails" tabindex="-1" aria-labelledby="taskDetails" aria-hidden="true">
                                 <div class="modal-dialog">
                                 <div class="modal-content">
@@ -193,16 +189,16 @@
                             </div>
                             </div>
                             <div>
-                                <button type="button" class=" btn btn-light"  data-bs-toggle="modal" data-bs-target="#editTask" disabled><span class="material-symbols-outlined">
-                                    edit
-                                </span></button>
+                                <button type="button" class=" btn btn-light"  data-bs-toggle="modal" data-bs-target="#editTask" disabled>
+                                    <i class="far fa-edit"></i>
+                                </button>
                             </div>
                             <div>
                                 <form action="{% url 'delete_task' task.id %}" method="post">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger"><span class="material-symbols-outlined">
-                                        delete
-                                    </span></button>
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="far fa-trash-alt"></i>
+                                    </button>
                                 </form>
                             </div>
                         </div>
@@ -213,5 +209,6 @@
             </ul>
         </div>
     </div>
+</div>
 </div>
 {% endblock %}
