@@ -76,7 +76,7 @@ def home(request):
         post_count = Post.objects.filter(user=user).count()
 
         # get latest post
-        posts = Post.objects.filter(user=user).order_by('-created')[:3]
+        posts = Post.objects.order_by('-created')[:3]
 
         # days dict key:value -> day_name: spanish_name
         DAYS = {
@@ -91,8 +91,7 @@ def home(request):
         #
         today = DAYS[day_name]
         # get user subjects
-        subjects = Subject.objects.filter(user=user, day=day_name)
-
+        subjects = Subject.objects.filter(user=user)
         # user percetange complete tasks
         if task_count > 0:
             percentage = (completed_tasks / task_count) * 100
