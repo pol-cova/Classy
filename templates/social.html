@@ -69,7 +69,7 @@
 
 </style>
 
-<div class="container">
+<div class="container-fluid">
 {% for post in posts %}
 <div class="post-card">
     <div class="post-header">
@@ -86,7 +86,7 @@
       <form action="{% url 'like_post' post.id %}" method="post" class="ml-2">
           {% csrf_token %}
           <button type="submit" class="btn btn-dark position-relative">
-              <span class="material-symbols-outlined">thumb_up</span>
+            <i class="far fa-thumbs-up"></i>
               <span class="position-absolute translate-middle badge rounded-pill bg-danger">{{post.total_likes}}</span>
           </button>
       </form>
@@ -94,13 +94,13 @@
       <form action="{% url 'dislike_post' post.id %}" method="post" class="ml-2">
           {% csrf_token %}
           <button type="submit" class="btn btn-warning position-relative">
-              <span class="material-symbols-outlined">thumb_down</span>
+            <i class="far fa-thumbs-down"></i>
               <span class="position-absolute translate-middle badge rounded-pill bg-danger">{{post.total_dislikes}}</span>
           </button>
       </form>
   
       <a class="btn btn-light position-relative" href="{% url 'details' post.id %}">
-          <span class="material-symbols-outlined">forum</span>
+        <i class="far fa-comments"></i>
           <span class="position-absolute translate-middle badge rounded-pill bg-success">{{ post.comment_count }}</span>
       </a>
   </div>

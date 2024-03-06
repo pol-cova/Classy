@@ -45,9 +45,9 @@
                         </div>
                         <div class="d-flex align-items-center gap-2">
                             <div>
-                            <button type="button" class="btn"  data-bs-toggle="modal" data-bs-target="#taskDetails"><span class="material-symbols-outlined">
-                                visibility
-                            </span></button>
+                            <button type="button" class="btn"  data-bs-toggle="modal" data-bs-target="#taskDetails">
+                                <i class="far fa-eye-slash"></i>
+                            </button>
                             <div class="modal fade" id="taskDetails" tabindex="-1" aria-labelledby="taskDetails" aria-hidden="true">
                                 <div class="modal-dialog">
                                 <div class="modal-content">
@@ -66,9 +66,9 @@
                             </div>
                             </div>
                             <div>
-                                <button type="button" class="btn"  data-bs-toggle="modal" data-bs-target="#editTask"><span class="material-symbols-outlined">
-                                    edit
-                                </span></button>
+                                <button type="button" class="btn"  data-bs-toggle="modal" data-bs-target="#editTask">
+                                    <i class="far fa-edit"></i>
+                                </button>
                                 <div class="modal fade" id="editTask" tabindex="-1" aria-labelledby="editTask" aria-hidden="true">
                                     <div class="modal-dialog">
                                     <div class="modal-content">
@@ -92,9 +92,9 @@
                             <div>
                                 <form action="{% url 'delete_note' note.id %}" method="post">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-danger"><span class="material-symbols-outlined">
-                                        delete
-                                    </span></button>
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="far fa-trash-alt"></i>
+                                    </button>
                                 </form>
                             </div>
                         </div>

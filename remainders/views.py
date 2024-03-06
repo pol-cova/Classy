@@ -8,12 +8,14 @@ from django.contrib.auth.decorators import login_required
 @login_required(login_url='/login')
 def index(request):
     # get user remainders
-    remainders = Remainder.objects.filter(user=request.user)
+    user = request.user
+    remainders = Remainder.objects.filter(user=user)
     form = ReminderForm()
     context = {
         'form_remainder': form,
         'remainders': remainders
     }
+    print(remainders)
     return render(request, 'remainders.html', context)
 
 # create remainder
@@ -22,14 +24,13 @@ def create_remainder(request):
     if request.method == 'POST':
         form = ReminderForm(request.POST)
         if form.is_valid():
-            form.save()
-            form = ReminderForm()
+            remainder = form.save(commit=False)
+            remainder.user = request.user
+            remainder.save()
             return redirect('remainders')
     else:
         form = ReminderForm()
-    context = {
-        'form_remainder': form
-    }
+        return render(request, 'remainders.html', {'form_remainder': form})
     return redirect('remainders')
 
 # complete remainder

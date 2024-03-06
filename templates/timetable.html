@@ -18,15 +18,15 @@
         margin-top: -8px;
     }
 </style>
+<div class="container-fluid">
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h4">Mi Horario: </h1>
     <div class="btn-toolbar mb-2 mb-md-0">
         <div class="btn-group me-2">
         <div>
-            <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#addSubject" ><span class="material-symbols-outlined">
-                add
-                </span>
-            </span>Agregar materia</button>
+            <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#addSubject" >
+            <i class="far fa-plus"></i>    
+            Agregar materia</button>
             <div class="modal fade" id="addSubject" tabindex="-1" aria-labelledby="addSubjectLabel" aria-hidden="true">
                 <div class="modal-dialog">
                 <div class="modal-content">
@@ -70,5 +70,6 @@
         </div>
         {% endfor %}
     </div>
+</div>
 </div>
 {% endblock %}
