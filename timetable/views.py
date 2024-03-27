@@ -33,11 +33,7 @@ def add_subject(request):
             subject = form.save(commit=False)
             subject.user = request.user
             subject.save()
-            print('success')
             return redirect('timetable')
-    else:
-        form = SubjectForm()
-        print('error')
     return render(request, 'timetable.html', {'add_subject_form': form})
 
 # Delete subject
