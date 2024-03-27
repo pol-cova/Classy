@@ -58,14 +58,14 @@
             <div class="mini-card">
                 <h4 id="day">{{ day }}</h4>
                 {% for subject in subjects|dictsort:"hour_start" %}
-                    {% if subject.get_day == day %}
-                    <div class="mini-card" style="background-color: {{ subject.color }} ; opacity: 80%;">
+                {% if subject.get_day == day %}
+                    <div class="mini-card" style="background-color: {{ subject.color }} ; opacity: 60%;">
                         <h5>{{ subject.name }} <a id="delete-clase" href="{% url 'delete_subject' subject.id %}"><i class="far fa-window-close"></i></a></h5>
                         <p><strong>Salon:</strong> {{ subject.clasroom }}</p>
-                        <p><strong>Horario:</strong> {{ subject.hour_start|time:"H:i" }} - {{ subject.hour_end|time:"H:i" }}</p>
+                        <p><strong>Horario:</strong> {{ subject.hour_start }} - {{ subject.hour_end }}</p>
                     </div>
-                    {% endif %}
-                {% endfor %}
+                {% endif %}
+            {% endfor %}
             </div>
         </div>
         {% endfor %}

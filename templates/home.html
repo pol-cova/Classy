@@ -85,14 +85,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for subject in subjects%}
-                                {% if subject.day == today %}
-                                <tr>
-                                    <td>{{subject.name}}</td>
-                                    <td>{{subject.hour_start}} - {{subject.hour_end}} </td>
-                                    <td>{{subject.clasroom}}</td>
-                                </tr>
-                                {% endif %}
+                                {% for subject in subjects|dictsort:"hour_start" %}
+                                    {% if subject.day == today %}
+                                        <tr>
+                                            <td>{{ subject.name }}</td>
+                                            <td>{{ subject.hour_start }} - {{ subject.hour_end }}</td>
+                                            <td>{{ subject.clasroom }}</td>
+                                        </tr>
+                                    {% endif %}
                                 {% endfor %}
                             </tbody>
                         </table>

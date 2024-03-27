@@ -46,7 +46,7 @@
     <p>{{message}}</p>
     <p>¡Completar tu perfil es rapido y sencillo, esto nos ayuda a conocerte un poco mejor!.</p>
     <p style="text-align:center;">
-        <a href="#" class="button">Completar perfil</a>
+        <a href="{{ protocol }}://{{ domain }}{% url 'profile' %}" class="button">Completar perfil</a>
     </p>
 </div>
 

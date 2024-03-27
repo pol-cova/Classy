@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import RegexValidator
 
 # Create your models here.
 # subject model for timetable: clave, crn , nombre, profesor, aula, horario, color
@@ -26,8 +27,20 @@ class Subject(models.Model):
     name = models.CharField(max_length=50)
     teacher = models.CharField(max_length=50)
     clasroom = models.CharField(max_length=50)
-    hour_start= models.TimeField()
-    hour_end = models.TimeField()
+    hour_start = models.CharField(max_length=5, validators=[
+        RegexValidator(
+            regex='^\d{2}:\d{2}$', 
+            message='Hour should be in the format HH:MM',
+            code='invalid_hour_format'
+        )
+    ])
+    hour_end = models.CharField(max_length=5, validators=[
+        RegexValidator(
+            regex='^\d{2}:\d{2}$', 
+            message='Hour should be in the format HH:MM',
+            code='invalid_hour_format'
+        )
+    ])
     day = models.CharField(max_length=10, choices=DAY, default='Lunes')
     color = models.CharField(max_length=7, choices=COLOR_CHOICES, default='#FF0000')
 

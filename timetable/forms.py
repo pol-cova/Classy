@@ -2,12 +2,12 @@ from django import forms
 from .models import Subject
 
 class SubjectForm(forms.ModelForm):
-    hour_start = forms.ChoiceField(choices=[(f"{i:02d}:00", f"{i:02d}:00") for i in range(8, 19)], 
-                                    widget=forms.Select(attrs={'class': 'form-control'}), 
-                                    label='Hora de inicio')
-    hour_end = forms.ChoiceField(choices=[(f"{i:02d}:00", f"{i:02d}:00") for i in range(8, 19)],
-                                    widget=forms.Select(attrs={'class': 'form-control'}), 
-                                    label='Hora de fin')
+    HOURS_CHOICES = [(f"{i:02d}:00", f"{i:02d}:00") for i in range(8, 19)]  # Choices from 8:00 to 18:00
+
+    hour_start = forms.ChoiceField(choices=HOURS_CHOICES, label='Hora de inicio',
+                                    widget=forms.Select(attrs={'class': 'form-control'}))
+    hour_end = forms.ChoiceField(choices=HOURS_CHOICES, label='Hora de fin',
+                                  widget=forms.Select(attrs={'class': 'form-control'}))
 
     class Meta:
         model = Subject
