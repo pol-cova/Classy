@@ -27,7 +27,7 @@ class Subject(models.Model):
     teacher = models.CharField(max_length=50)
     clasroom = models.CharField(max_length=50)
     hour_start= models.TimeField()
-    hour_end = models.TimeField(default='23:59:59')
+    hour_end = models.TimeField()
     day = models.CharField(max_length=10, choices=DAY, default='Lunes')
     color = models.CharField(max_length=7, choices=COLOR_CHOICES, default='#FF0000')
 
