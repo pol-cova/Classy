@@ -156,20 +156,6 @@ def user_signup(request):
             username = form.cleaned_data['username']
             # save user
             form.save()
-            # send an email to complete profile
-            context = {
-                'message': "Hola @" + username + "! Gracias por registrarte en Classy"
-            }
-
-            html_message = render_to_string('email.html', context=context)
-            plain_message = strip_tags(html_message)
-            subject = "noreply: Classy | Completa tu perfil ahora"
-            body = plain_message
-            email_from = settings.EMAIL_HOST_USER
-            recipient_list = [email]
-            msg = EmailMultiAlternatives(subject, body, email_from, recipient_list)
-            msg.attach_alternative(html_message, "text/html")
-            msg.send()
             return redirect('login_page')
         else:
             form = SignUpForm()
