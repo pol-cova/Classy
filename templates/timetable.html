@@ -13,7 +13,7 @@
     }
     #delete-clase {
         float: right;
-        color: #f2f4f3;
+        color: #1a1b25;
         font-size: 24px;
         margin-top: -8px;
     }
@@ -60,7 +60,7 @@
                 {% for subject in subjects|dictsort:"hour_start" %}
                     {% if subject.get_day == day %}
                     <div class="mini-card" style="background-color: {{ subject.color }} ; opacity: 80%;">
-                        <h5>{{ subject.name }} <a id="delete-clase" href="{% url 'delete_subject' subject.id %}"><span class="material-symbols-outlined">close</span></a></h5>
+                        <h5>{{ subject.name }} <a id="delete-clase" href="{% url 'delete_subject' subject.id %}"><i class="far fa-window-close"></i></a></h5>
                         <p><strong>Salon:</strong> {{ subject.clasroom }}</p>
                         <p><strong>Horario:</strong> {{ subject.hour_start|time:"H:i" }} - {{ subject.hour_end|time:"H:i" }}</p>
                     </div>

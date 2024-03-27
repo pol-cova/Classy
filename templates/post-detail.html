@@ -1,135 +1,144 @@
 {% extends '_home_base.html' %}
-
+{% load static %}
 {% block content %}
 <style>
-    .post-card {
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      padding: 15px;
-      margin-bottom: 15px;
-    }
-    
-    .comment-card {
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      padding: 15px;
-      margin-bottom: 15px;
-    }
-    
-    
-    .user-info {
-      overflow: hidden; /* Prevent text from wrapping under avatar */
-    }
-    
-    .user-name {
-      font-weight: bold;
-    }
-    
-    .post-time {
-      color: #999;
-      font-size: 12px;
-    }
-    
-    .post-content {
-      clear: both; /* Clear the float from the avatar */
-      margin-top: 10px;
-    }
-    
-    
-    .btn-like,
-    .btn-comment,
-    .btn-share {
-      background-color: #f0f0f0;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 3px;
-      cursor: pointer;
-    }
-    
-    .btn-like:hover,
-    .btn-comment:hover,
-    .btn-share:hover {
-      background-color: #e0e0e0;
-    }
-    
-    .btn-new-post {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        margin: 25px; /* Add some margin for spacing */
-    }
-    
-    .post-footer {
-            display: flex;
-            justify-content: flex-end;
-        }
-    
-        .post-footer form {
-            margin-left: 8px; /* Adjust the margin as needed */
-        }
-    
-    </style>
-    
+  .post-detail {
+    margin-bottom: 50px; /* Add margin for spacing */
+  }
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <a class="btn" href="{% url 'social_home' %}"><span class="material-symbols-outlined">arrow_back</span></a>
-            <h1>{{ post.title }}</h1>
-            <p>{{ post.content }}</p>
-        </div>
+  .post-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .user-info {
+    margin-bottom: 10px;
+  }
+
+  .user-info img {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  .comment-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+  }
+
+  .comment-user {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .comment-content {
+    margin-bottom: 5px;
+  }
+
+  .comment-time {
+    font-size: 12px;
+    color: #888;
+  }
+
+  .comment-actions {
+    margin-top: 10px;
+  }
+
+  .comment-actions button {
+    margin-right: 10px;
+    background-color: #f0f0f0;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  .comment-actions button:hover {
+    background-color: #e0e0e0;
+  }
+
+  .comment-form {
+    margin-top: 20px;
+  }
+
+  .comment-form textarea {
+    width: 100%;
+    height: 100px;
+    resize: vertical;
+    margin-bottom: 10px;
+  }
+
+  .comment-form button {
+    background-color: #1a1b25;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .comment-form button:hover {
+    background-color: #0e0f15;
+  }
+</style>
+
+<div class="container post-detail">
+  <div class="row">
+    <div class="col-md-12">
+      <a class="btn" href="{% url 'social_home' %}"><i class="far fa-arrow-left"></i></a>
+      <h1 class="post-title">{{ post.title }}</h1>
+      <div class="user-info">
+        <img src="{% static 'imgs/default_avatar.png' %}" class="rounded-circle">
+        <span class="text-muted">@{{ post.user }}</span>
+      </div>
+      <p>{{ post.content }}</p>
     </div>
-    <div class="row">
-        {% if not comments %}
-        <div class="col-md-12">
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <strong>No hay comentarios aún!</strong> Se el primero en comentar.
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        </div>
-        {% endif %}
-        {% for comment in comments %}
-        <div class="comment-card">
-            <div class="user-info">
-                <span class="user-name">@{{comment.user}}</span>
-                <span class="post-time">{{comment.created}}</span>
-            </div>
-            <div class="card-body">
-                {{comment.content}}
-            <div class="post-footer">
-            <form action="{% url 'like_comment' comment.id %}" method="post" class="ml-2">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-dark position-relative">
-                    <span class="material-symbols-outlined">thumb_up</span>
-                    <span class="position-absolute translate-middle badge rounded-pill bg-danger">{{comment.total_likes}}</span>
-                </button>
-            </form>
-            <form action="{% url 'dislike_comment' comment.id %}" method="post" class="ml-2">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-warning position-relative">
-                    <span class="material-symbols-outlined">thumb_down</span>
-                    <span class="position-absolute translate-middle badge rounded-pill bg-danger">{{comment.total_dislikes}}</span>
-                </button>
-            </form>
-            </div>
-            </div>
-        </div>
-        
-        {% endfor %}
+  </div>
+
+  <div class="row">
+    {% if not comments %}
+    <div class="col-md-12">
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>No hay comentarios aún!</strong> Sé el primero en comentar.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
     </div>
+    {% endif %}
+    {% for comment in comments %}
+    <div class="col-md-12">
+      <div class="comment-card">
+        <div class="comment-user">{{ comment.user }}</div>
+        <div class="comment-content">{{ comment.content }}</div>
+        <div class="comment-time">{{ comment.created }}</div>
+        <div class="comment-actions">
+          <form action="{% url 'like_comment' comment.id %}" method="post" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm"><i class="far fa-thumbs-up"></i> {{ comment.total_likes }}</button>
+          </form>
+          <form action="{% url 'dislike_comment' comment.id %}" method="post" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm"><i class="far fa-thumbs-down"></i> {{ comment.total_dislikes }}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="comment-form">
+        <form method="post" action="{% url 'create_comment' post.id %}">
+          {% csrf_token %}
+          <textarea name="content" placeholder="Escribe tu comentario..." required></textarea>
+          <button type="submit" class="btn">Enviar comentario</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
-<footer>
-    <form method="post" action="{% url 'create_comment' post.id %}" class="row row-cols-lg-auto g-3 justify-content-end">
-        {% csrf_token %}
-        <div class="col">
-        {{comment_form}}
-        </div>
-        <div class="col">
-        <button type="submit" class="btn btn-dark"><span class="material-symbols-outlined">
-        send
-        </span></button>
-        </div>
-    </form>
-</footer>
-
 {% endblock %}

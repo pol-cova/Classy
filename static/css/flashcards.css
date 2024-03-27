@@ -1,9 +1,24 @@
-body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #1a1b25;
-    margin: 0;
-    font-family: 'Inconsolata', monospace;
+.flashcard {
+    border: 2px solid #007bff; /* Border color */
+    border-radius: 10px; /* Border radius */
+    padding: 20px; /* Padding inside the card */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+    transition: border-color 0.3s, transform 0.3s; /* Smooth transition effects */
+}
+
+.flashcard:hover {
+    border-color: #0056b3; /* Border color on hover */
+    transform: translateY(-5px); /* Move card up slightly on hover */
+}
+
+.question {
+    font-size: 24px; /* Font size for the question */
+    font-weight: bold; /* Bold font weight for the question */
+    text-align: center; /* Center align the text */
+}
+
+.answer {
+    font-size: 18px; /* Font size for the answer */
+    font-weight: normal; /* Normal font weight for the answer */
+    text-align: center; /* Center align the text */
 }

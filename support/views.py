@@ -21,11 +21,12 @@ def admin_auth(request):
         password = request.POST['password']
         SUPPORT_MAIL = os.getenv('SUPPORT_MAIL')
         SUPPORT_PASSWORD = os.getenv('SUPPORT_PASSWORD')
-        user = authenticate(username=SUPPORT_MAIL, password=SUPPORT_PASSWORD)
-        if user is not None:
-            return 'Success'
+        print(mail)
+        print(password)
+        if(mail == SUPPORT_MAIL and password == SUPPORT_PASSWORD):
+            return redirect('admin_dash', 'admin')
         else:
-            return 'Fail'
+            return 'error'
     else:
         return redirect('admin_login')
 

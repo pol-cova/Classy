@@ -12,7 +12,15 @@ def social_home(request):
     # get comments for each post
     for post in posts:
         post.comments = Comment.objects.filter(post=post).order_by('-created')
-    
+    # likes by user for each post
+    for post in posts:
+        post.liked = False
+        post.disliked = False
+        if request.user in post.likes.all():
+            post.liked = True
+        if request.user in post.dislikes.all():
+            post.disliked = True
+            
     context = {
         'new_post_form': PostForm(),
         'comment_form': CommentForm(),
