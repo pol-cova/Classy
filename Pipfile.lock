@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "f02618ca2cd37f862a34bbd560102e8755dc6ef794e575896f190adf0551074b"
+            "sha256": "e7c87d633fbcc32ee3009b163f1547cbb88cd19cd994baab6294dcb251712a8a"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -249,6 +249,17 @@
             "markers": "python_version >= '3.10'",
             "version": "==5.0.3"
         },
+        "django-anymail": {
+            "extras": [
+                "mailersend"
+            ],
+            "hashes": [
+                "sha256:1e72f059e96930d3675d35fe4c61f82b138ae4a7fcb0337be39dcb4823f94a4f",
+                "sha256:35d8ec20b06000af3c1638492e32f416fd1a584f0a572cded03f1bc570169ed0"
+            ],
+            "markers": "python_version >= '3.7'",
+            "version": "==10.3"
+        },
         "django-templated-mail": {
             "hashes": [
                 "sha256:8db807effebb42a532622e2d142dfd453dafcd0d7794c4c3332acb90656315f9",
@@ -298,6 +309,15 @@
             ],
             "markers": "python_version >= '3.5'",
             "version": "==3.6"
+        },
+        "mailersend": {
+            "hashes": [
+                "sha256:136cd537c4449118a4599df3e144fc910542540273f80c026bb0d7b4f39ca19d",
+                "sha256:2d316859f7f8de1c1d666ec5c5659220dccfa312da162d78811c9b4e81bb15d8"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '3.7' and python_version < '4.0'",
+            "version": "==0.5.6"
         },
         "oauthlib": {
             "hashes": [
@@ -431,6 +451,14 @@
             ],
             "markers": "python_version >= '3.4'",
             "version": "==2.0.0"
+        },
+        "setuptools": {
+            "hashes": [
+                "sha256:4ac1475276d2f1c48684874089fefcd83bd7162ddaafb81fac866ba0db282a87",
+                "sha256:b454a35605876da60632df1a60f736524eb73cc47bbc9f3f1ef1b644de74fd2a"
+            ],
+            "markers": "python_version >= '3.8'",
+            "version": "==68.2.2"
         },
         "social-auth-app-django": {
             "hashes": [

@@ -11,6 +11,8 @@ whitenoise = "*"
 dj-database-url = "*"
 psycopg2-binary = "*"
 gunicorn = "*"
+mailersend = "*"
+django-anymail = {extras = ["mailersend"], version = "*"}
 
 [dev-packages]
 

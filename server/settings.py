@@ -57,6 +57,8 @@ INSTALLED_APPS = [
     "flashcards",
     # SUPPORT
     "support",
+    # PLUGINS
+    "anymail"
 ]
 
 MIDDLEWARE = [
@@ -160,8 +162,16 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # EMAIL SETTINGS
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
+
+ANYMAIL = {
+    "MAILERSEND_API_TOKEN": os.getenv("API_MAIL"),
+    "MAILERSEND_API_URL": "https://api.mailersend.com/v1/email",
+    }
+
+
+
+EMAIL_BACKEND = "anymail.backends.mailersend.EmailBackend"
+EMAIL_HOST = 'smtp.mailersend.net'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")

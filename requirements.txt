@@ -7,6 +7,7 @@ defusedxml==0.8.0rc2
 distlib==0.3.8
 dj-database-url==2.1.0
 Django==5.0.3
+django-anymail==10.3
 django-templated-mail==1.1.1
 djangorestframework==3.15.1
 djangorestframework-simplejwt==5.3.1
@@ -14,6 +15,7 @@ djoser==2.2.2
 filelock==3.13.1
 gunicorn==21.2.0
 idna==3.6
+mailersend==0.5.6
 oauthlib==3.2.2
 packaging==24.0
 pipenv==2023.11.17
